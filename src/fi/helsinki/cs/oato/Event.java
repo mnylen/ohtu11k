@@ -91,4 +91,24 @@ public class Event {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    
+    public boolean equals(Object another) {
+        if (!(another instanceof Event)) {
+            return false;
+        }
+
+        if (another == this) {
+            return true;
+        } else {
+            Event other = (Event)another;
+            
+            boolean equals = this.getDescription().equals(other.getDescription());
+            equals = equals && this.getLocation().equals(other.getLocation());
+            equals = equals && this.getStartDate().equals(other.getStartDate());
+            equals = equals && this.getEndDate().equals(other.getEndDate());
+
+            return equals;
+        }
+    }
 }

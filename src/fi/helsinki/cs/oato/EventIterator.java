@@ -34,6 +34,15 @@ public class EventIterator implements Iterator<Event> {
         return (this.firstEvent != null) || this.innerIterator.hasNext();
     }
 
+    /**
+     * Gets whether the iterator is set up to discard past events.
+     * @return <code>true</code> if this iterator discards past events;
+     *         <code>false</code> otherwise
+     */
+    public boolean isPastDiscarded() {
+        return discardPast;
+    }
+
     public Event next() {
         Event nextEvent;
 

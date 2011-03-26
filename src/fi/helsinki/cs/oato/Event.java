@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Represents an event that occurs at specific location and time.
  */
-public class Event {
+public class Event implements Comparable<Event> {
     private Date startDate;
     private Date endDate;
     private String description;
@@ -92,6 +92,13 @@ public class Event {
         this.location = location;
     }
 
+    public int compareTo(Event another) {
+        if (this.equals(another)) {
+            return 0;
+        } else {
+            return another.getStartDate().compareTo(this.getStartDate());
+        }
+    }
     
     public boolean equals(Object another) {
         if (!(another instanceof Event)) {

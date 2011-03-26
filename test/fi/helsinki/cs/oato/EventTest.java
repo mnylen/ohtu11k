@@ -17,4 +17,14 @@ public class EventTest {
         Event softwareEngineeringLecture = EventFixtures.createSoftwareEngineeringLecture();
         assertThat(softwareEngineeringLecture, not(equalTo(dentistAppointment)));
     }
+
+    @Test
+    public void testCompareTo() {
+        Event upcomingEvent        = EventFixtures.createUpcomingEvent(EventFixtures.ONE_HOUR);
+        Event anotherUpcomingEvent = EventFixtures.createPastEvent(EventFixtures.ONE_DAY);
+        
+        assertThat(upcomingEvent.compareTo(upcomingEvent), is(0));
+        assertThat(upcomingEvent.compareTo(anotherUpcomingEvent), is(-1));
+        assertThat(anotherUpcomingEvent.compareTo(upcomingEvent), is(1));
+    }
 }

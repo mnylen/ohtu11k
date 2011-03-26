@@ -3,29 +3,63 @@ package fi.helsinki.cs.oato;
 import java.util.*;
 
 public class EventIterator implements Iterator<Event> {
-    private List<Event> events;
+    private Event firstEvent;
     private Iterator<Event> innerIterator;
     
     private boolean discardPast;
 
     public EventIterator(Collection<Event> events, boolean discardPast) {
-        this.events = new ArrayList<Event>(events);
-        Collections.sort(this.events);
+        List<Event> sortedEvents = new ArrayList<Event>(events);
+        Collections.sort(sortedEvents);
 
         this.discardPast   = discardPast;
-        this.innerIterator = this.events.iterator();
+        this.innerIterator = sortedEvents.iterator();
+
+        if (this.discardPast) {
+            rewindToFirstUpcomingEvent();
+        }
     }
 
     public boolean hasNext() {
-        return innerIterator.hasNext();
+        if (this.firstEvent != null) {
+            return true;
+        } else {
+            return this.innerIterator.hasNext();
+        }
     }
 
     public Event next() {
-        return innerIterator.next();
+        Event nextEvent = null;
+
+        if (this.firstEvent != null) {
+            nextEvent = this.firstEvent;
+            this.firstEvent = null;
+        } else {
+            nextEvent = this.innerIterator.next();
+        }
+
+        return nextEvent;
     }
 
     public void remove() {
         throw new UnsupportedOperationException(
                 "remove() operation is not supported by EventIterator");
+    }
+
+    private void rewindToFirstUpcomingEvent() {
+        long timeMillis = System.currentTimeMillis();
+        Event event = null;
+
+        while (this.innerIterator.hasNext()) {
+            event = this.innerIterator.next();
+
+            if (event.getStartDate().getTime() >= timeMillis) {
+                break;
+            }
+        }
+
+        if (event != null) {
+            this.firstEvent = event;
+        }
     }
 }

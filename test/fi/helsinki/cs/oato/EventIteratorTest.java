@@ -38,4 +38,15 @@ public class EventIteratorTest {
         assertThat(iterator.next(), is(sameInstance(this.secondUpcomingEvent)));
         assertThat(iterator.hasNext(), is(false));
     }
+
+    @Test
+    public void testDiscardsPastEvents() {
+        EventIterator iterator = new EventIterator(this.allEvents, true);
+
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(sameInstance(this.firstUpcomingEvent)));
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(sameInstance(this.secondUpcomingEvent)));
+        assertThat(iterator.hasNext(), is(false));
+    }
 }

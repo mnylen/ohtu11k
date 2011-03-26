@@ -34,4 +34,16 @@ public class Schedule {
     public Collection<Event> allEvents() {
         return Collections.unmodifiableCollection(events);
     }
+
+    /**
+     * Gets an iterator over all scheduled events.
+     * <p>
+     * The iterator returns all upcoming events in the order by starting
+     * date and time.
+     *
+     * @return <code>Iterator</code> over upcoming events
+     */
+    public Iterator<Event> nextEvents() {
+        return new EventIterator(this.allEvents(), true);
+    }
 }

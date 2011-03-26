@@ -7,6 +7,7 @@ import org.junit.Before;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 public class ScheduleTest {
     private Event dentistAppointment;
@@ -43,5 +44,15 @@ public class ScheduleTest {
         } catch (UnsupportedOperationException e) {
             assertThat(allEvents.contains(this.dentistAppointment), is(false));
         }
+    }
+
+    @Test
+    public void testNextEvents() {
+        Schedule schedule = new Schedule();
+        Iterator<Event> nextEvents = schedule.nextEvents();
+
+        assertThat(nextEvents, not(nullValue()));
+        assertThat(nextEvents, instanceOf(EventIterator.class));
+        assertThat(((EventIterator)nextEvents).isPastDiscarded(), is(true));
     }
 }

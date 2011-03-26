@@ -3,7 +3,7 @@ package fi.helsinki.cs.oato;
 import java.util.*;
 
 /**
- * Schedule.
+ * Container for events.
  */
 public class Schedule {
     private Collection<Event> events;

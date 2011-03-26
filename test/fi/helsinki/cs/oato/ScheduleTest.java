@@ -25,10 +25,23 @@ public class ScheduleTest {
         events.add(this.softwareEngineeringLecture);
 
         Schedule schedule = new Schedule(events);
-        Collection<Event> actualEvents = schedule.getEvents();
+        Collection<Event> actualEvents = schedule.allEvents();
 
         assertThat(actualEvents.contains(this.dentistAppointment), is(true));
         assertThat(actualEvents.contains(this.softwareEngineeringLecture), is(true));
         assertThat(actualEvents, is(not(sameInstance(events))));
+    }
+
+    @Test
+    public void testAllEventsIsUnmodifiable() {
+        Schedule schedule = new Schedule();
+        Collection<Event> allEvents = schedule.allEvents();
+
+        try {
+            allEvents.add(this.dentistAppointment);
+            fail("allEvents() should return unmodifiable collection");
+        } catch (UnsupportedOperationException e) {
+            assertThat(allEvents.contains(this.dentistAppointment), is(false));
+        }
     }
 }

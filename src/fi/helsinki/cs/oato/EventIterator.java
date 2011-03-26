@@ -39,7 +39,7 @@ public class EventIterator implements Iterator<Event> {
     }
 
     public Event next() {
-        Event nextEvent = null;
+        Event nextEvent;
 
         if (this.firstEvent != null) {
             nextEvent = this.firstEvent;

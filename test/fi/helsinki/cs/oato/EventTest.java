@@ -21,7 +21,7 @@ public class EventTest {
     @Test
     public void testCompareTo() {
         Event upcomingEvent        = EventFixtures.createUpcomingEvent(EventFixtures.ONE_HOUR);
-        Event anotherUpcomingEvent = EventFixtures.createPastEvent(EventFixtures.ONE_DAY);
+        Event anotherUpcomingEvent = EventFixtures.createUpcomingEvent(EventFixtures.ONE_DAY);
         
         assertThat(upcomingEvent.compareTo(upcomingEvent), is(0));
         assertThat(upcomingEvent.compareTo(anotherUpcomingEvent), is(-1));

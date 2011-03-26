@@ -92,6 +92,14 @@ public class Event implements Comparable<Event> {
         this.location = location;
     }
 
+    /**
+     * Compares this event to given event.
+     *
+     * @param another the other event
+     * @return <code>-1</code> if this event starts earlier than the other;
+     *         <code>0</code> if the events start at the same time;
+     *         <code>1</code> if this event starts later than the other
+     */
     public int compareTo(Event another) {
         if (this.equals(another)) {
             return 0;

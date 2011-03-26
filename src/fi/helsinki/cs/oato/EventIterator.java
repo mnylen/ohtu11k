@@ -31,11 +31,7 @@ public class EventIterator implements Iterator<Event> {
     }
 
     public boolean hasNext() {
-        if (this.firstEvent != null) {
-            return true;
-        } else {
-            return this.innerIterator.hasNext();
-        }
+        return (this.firstEvent != null) || this.innerIterator.hasNext();
     }
 
     public Event next() {

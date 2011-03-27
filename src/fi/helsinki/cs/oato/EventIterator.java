@@ -6,7 +6,7 @@ import java.util.*;
  * Iterator over a collection of events. Returns events in ascending order by
  * the starting date.
  */
-public class EventIterator implements Iterator<Event> {
+class EventIterator implements Iterator<Event> {
     private Event firstEvent;
     private Iterator<Event> innerIterator;
     private boolean discardPast;

@@ -2,6 +2,7 @@ package fi.helsinki.cs.oato.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.EventListener;
 
 import javax.swing.*;
 
@@ -29,6 +30,7 @@ public class MainGUI extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				// show add UI
+				new EditEvent();
 			}
 		} );
 		
@@ -70,6 +72,7 @@ public class MainGUI extends JFrame {
 		JButton edit = new JButton("Edit");
 		item.add( edit );
 		edit.setVisible(false);
+		edit.addActionListener( new EventActionListener(event) );
 		
 		// button for deleting this event
 		JButton delete = new JButton("Delete");
@@ -94,6 +97,22 @@ public class MainGUI extends JFrame {
 		this.add( item );
 	}
 	
+	private class EventActionListener implements ActionListener {
+
+		private Event event;
+		
+		public EventActionListener(Event event) {
+			this.event = event;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			new EditEvent(this.event);
+			
+		}
+		
+		
+	}
+	
 	private class EventDisplayListener implements MouseListener {
 
 		JButton delete;
@@ -114,8 +133,8 @@ public class MainGUI extends JFrame {
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			this.delete.setVisible(false);
-			this.edit.setVisible(false);
+			// this.delete.setVisible(false);
+			// this.edit.setVisible(false);
 		}
 
 		@Override

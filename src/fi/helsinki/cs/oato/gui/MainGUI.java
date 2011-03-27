@@ -2,6 +2,7 @@ package fi.helsinki.cs.oato.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
@@ -24,6 +25,29 @@ public class MainGUI extends JFrame {
 		JButton saveData = new JButton("Save");
 		JButton openData = new JButton("Open");
 		
+		addEvent.addActionListener( new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// show add UI
+			}
+		} );
+		
+		saveData.addActionListener( new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showSaveDialog( MainGUI.this );
+			}
+		} );
+		
+		openData.addActionListener( new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog( MainGUI.this );
+			}
+		});
+		
 		this.add( addEvent );
 		this.add( saveData );
 		this.add( openData );
@@ -37,18 +61,34 @@ public class MainGUI extends JFrame {
 		// create a new panel for showing this item
 		JPanel item = new JPanel();
 		item.setLayout( new FlowLayout() );
+		
+		// show actual event
 		JLabel text = new JLabel("text " + event.toString() );
 		item.add( text );
+		
+		// button for editing this event
 		JButton edit = new JButton("Edit");
 		item.add( edit );
 		edit.setVisible(false);
+		
+		// button for deleting this event
 		JButton delete = new JButton("Delete");
 		delete.setSize(100, 50);
 		delete.setVisible(false);
+		delete.addActionListener( new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// TODO: a mockup solution
+				JButton b = (JButton)(e.getSource());
+				b.getParent().setVisible(false);
+			}
+		} );
 		item.add( delete );
+		
+		item.setSize(500, 50);
+		item.setBackground(  Color.PINK );
 		// add mouse over listener for this item
 		// hide / display delete / edit when mouse over
-		item.setSize(500, 50);
 		item.addMouseListener( new EventDisplayListener(delete, edit) );
 		
 		this.add( item );

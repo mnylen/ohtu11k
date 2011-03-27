@@ -126,4 +126,9 @@ public class Event implements Comparable<Event> {
             return equals;
         }
     }
+    
+    public String toString() {
+    	// FIXME: deprecated?
+    	return getDescription() + " " + startDate.getHours() + ":" + startDate.getMinutes() + " [" + getLocation() + "]";
+    }
 }

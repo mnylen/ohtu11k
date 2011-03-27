@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class ScheduleCsvWriter extends ScheduleWriter {
+public class CsvScheduleWriter extends ScheduleWriter {
     public static final String HEADER_START_DATE = "start";
     public static final int HEADER_START_DATE_INDEX = 0;
     public static final String HEADER_END_DATE = "end";
@@ -24,7 +24,7 @@ public class ScheduleCsvWriter extends ScheduleWriter {
 
     private OutputStream out;
 
-    public ScheduleCsvWriter(OutputStream out) {
+    public CsvScheduleWriter(OutputStream out) {
         this.out = out;
     }
     

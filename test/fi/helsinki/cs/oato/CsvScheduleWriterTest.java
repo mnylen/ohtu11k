@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-public class ScheduleCsvWriterTest {
+public class CsvScheduleWriterTest {
     private Schedule schedule;
     private Event dentistAppointment;
     private Event softwareEngineeringLecture;
@@ -32,14 +32,14 @@ public class ScheduleCsvWriterTest {
     @Test
     public void testWrite() throws IOException  {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ScheduleWriter writer     = new ScheduleCsvWriter(out);
+        ScheduleWriter writer     = new CsvScheduleWriter(out);
         writer.write(this.schedule);
 
         ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
         CsvReader reader        = new CsvReader(
                 in,
-                ScheduleCsvWriter.SEPARATOR,
-                ScheduleCsvWriter.CHARSET);
+                CsvScheduleWriter.SEPARATOR,
+                CsvScheduleWriter.CHARSET);
 
         assertCorrectHeaders(reader);
         assertNextRecordEqualTo(reader, this.dentistAppointment);
@@ -50,34 +50,34 @@ public class ScheduleCsvWriterTest {
     private void assertCorrectHeaders(CsvReader reader) throws IOException {
         reader.readHeaders();
 
-        assertThat(reader.getHeader(ScheduleCsvWriter.HEADER_START_DATE_INDEX),
-                equalTo(ScheduleCsvWriter.HEADER_START_DATE));
+        assertThat(reader.getHeader(CsvScheduleWriter.HEADER_START_DATE_INDEX),
+                equalTo(CsvScheduleWriter.HEADER_START_DATE));
 
-        assertThat(reader.getHeader(ScheduleCsvWriter.HEADER_END_DATE_INDEX),
-                equalTo(ScheduleCsvWriter.HEADER_END_DATE));
+        assertThat(reader.getHeader(CsvScheduleWriter.HEADER_END_DATE_INDEX),
+                equalTo(CsvScheduleWriter.HEADER_END_DATE));
 
-        assertThat(reader.getHeader(ScheduleCsvWriter.HEADER_DESCRIPTION_INDEX),
-                equalTo(ScheduleCsvWriter.HEADER_DESCRIPTION));
+        assertThat(reader.getHeader(CsvScheduleWriter.HEADER_DESCRIPTION_INDEX),
+                equalTo(CsvScheduleWriter.HEADER_DESCRIPTION));
 
-        assertThat(reader.getHeader(ScheduleCsvWriter.HEADER_LOCATION_INDEX),
-                equalTo(ScheduleCsvWriter.HEADER_LOCATION));        
+        assertThat(reader.getHeader(CsvScheduleWriter.HEADER_LOCATION_INDEX),
+                equalTo(CsvScheduleWriter.HEADER_LOCATION));
     }
 
     private void assertNextRecordEqualTo(CsvReader reader, Event event) throws IOException {
         assertThat(reader.readRecord(), is(true));
         
-        assertThat(reader.get(ScheduleCsvWriter.HEADER_START_DATE_INDEX),
-                equalTo(ScheduleCsvWriter.DATE_FORMAT.format(
+        assertThat(reader.get(CsvScheduleWriter.HEADER_START_DATE_INDEX),
+                equalTo(CsvScheduleWriter.DATE_FORMAT.format(
                         event.getStartDate())));
 
-        assertThat(reader.get(ScheduleCsvWriter.HEADER_END_DATE_INDEX),
-                equalTo(ScheduleCsvWriter.DATE_FORMAT.format(
+        assertThat(reader.get(CsvScheduleWriter.HEADER_END_DATE_INDEX),
+                equalTo(CsvScheduleWriter.DATE_FORMAT.format(
                         event.getEndDate())));
 
-        assertThat(reader.get(ScheduleCsvWriter.HEADER_DESCRIPTION_INDEX),
+        assertThat(reader.get(CsvScheduleWriter.HEADER_DESCRIPTION_INDEX),
                 equalTo(event.getDescription()));
 
-        assertThat(reader.get(ScheduleCsvWriter.HEADER_LOCATION_INDEX),
+        assertThat(reader.get(CsvScheduleWriter.HEADER_LOCATION_INDEX),
                 equalTo(event.getLocation()));
     }
 }

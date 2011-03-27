@@ -2,7 +2,6 @@ package fi.helsinki.cs.oato;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 
@@ -32,7 +31,7 @@ public class CsvScheduleReaderTest {
         this.schedule = new Schedule(events);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ScheduleWriter writer     = new ScheduleCsvWriter(out);
+        ScheduleWriter writer     = new CsvScheduleWriter(out);
         writer.write(this.schedule);
 
         ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());

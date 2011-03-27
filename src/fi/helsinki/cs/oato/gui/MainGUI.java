@@ -7,7 +7,6 @@ import java.util.EventListener;
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
-import fi.helsinki.cs.oato.EventFixtures;
 
 public class MainGUI extends JFrame {
 
@@ -149,8 +148,9 @@ public class MainGUI extends JFrame {
 	 */
 	public static void main(String[] args) {
 		MainGUI m = new MainGUI();
+        /*
 		m.addEvent( EventFixtures.createDentistAppointment() );
-		m.addEvent( EventFixtures.createSoftwareEngineeringLecture() );
+		m.addEvent( EventFixtures.createSoftwareEngineeringLecture() );*/
 	}
 
 }

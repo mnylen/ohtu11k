@@ -125,23 +125,19 @@ public class MainGUI extends JFrame {
 		
 		public void mouseClicked(MouseEvent e) {}
 
-		@Override
 		public void mouseEntered(MouseEvent e) {
 			this.delete.setVisible(true);
 			this.edit.setVisible(true);
 		}
 
-		@Override
 		public void mouseExited(MouseEvent e) {
 			// this.delete.setVisible(false);
 			// this.edit.setVisible(false);
 		}
 
-		@Override
 		public void mousePressed(MouseEvent e) {
 		}
 
-		@Override
 		public void mouseReleased(MouseEvent e) {
 		}
 		

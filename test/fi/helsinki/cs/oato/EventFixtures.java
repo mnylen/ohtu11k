@@ -3,7 +3,7 @@ package fi.helsinki.cs.oato;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class EventFixtures {
+public abstract class EventFixtures {
     public static final long ONE_HOUR  = 3600000;
     public static final long TEN_HOURS = ONE_HOUR * 10;
     public static final long ONE_DAY   = ONE_HOUR * 24;

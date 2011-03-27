@@ -1,0 +1,62 @@
+package fi.helsinki.cs.oato;
+
+import com.csvreader.CsvWriter;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+public class ScheduleCsvWriter extends ScheduleWriter {
+    public static final String HEADER_START_DATE = "start";
+    public static final int HEADER_START_DATE_INDEX = 0;
+    public static final String HEADER_END_DATE = "end";
+    public static final int HEADER_END_DATE_INDEX = 1;
+    public static final String HEADER_DESCRIPTION = "description";
+    public static final int HEADER_DESCRIPTION_INDEX = 2;
+    public static final String HEADER_LOCATION = "location";
+    public static final int HEADER_LOCATION_INDEX = 3;
+    public static final char SEPARATOR = ',';
+    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final Charset CHARSET = Charset.forName("UTF-8");
+    private static final int COLUMN_COUNT = 4;
+
+    private OutputStream out;
+
+    public ScheduleCsvWriter(OutputStream out) {
+        this.out = out;
+    }
+    
+    public void write(Schedule schedule) throws IOException {
+        CsvWriter writer = new CsvWriter(this.out, SEPARATOR, CHARSET);
+        writeHeaderRecord(writer);
+
+        for (Event event : schedule.allEvents()) {
+            writeEventRecord(writer, event);
+        }
+
+        writer.flush();
+        this.out.flush();
+    }
+
+    private void writeHeaderRecord(CsvWriter writer) throws IOException {
+        String[] headers = new String[COLUMN_COUNT];
+        headers[HEADER_START_DATE_INDEX]  = HEADER_START_DATE;
+        headers[HEADER_END_DATE_INDEX]    = HEADER_END_DATE;
+        headers[HEADER_DESCRIPTION_INDEX] = HEADER_DESCRIPTION;
+        headers[HEADER_LOCATION_INDEX]    = HEADER_LOCATION;
+
+        writer.writeRecord(headers);
+    }
+
+    private void writeEventRecord(CsvWriter writer, Event event) throws IOException {
+        String[] record = new String[COLUMN_COUNT];
+        record[HEADER_START_DATE_INDEX]  = DATE_FORMAT.format(event.getStartDate());
+        record[HEADER_END_DATE_INDEX]    = DATE_FORMAT.format(event.getEndDate());
+        record[HEADER_DESCRIPTION_INDEX] = event.getDescription();
+        record[HEADER_LOCATION_INDEX]    = event.getLocation();
+        
+        writer.writeRecord(record);
+    }
+}

@@ -12,6 +12,8 @@ public class MainGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
+	private JPanel events = new JPanel();
+	
 	public MainGUI(){
 		super();
 		this.pack();
@@ -53,6 +55,13 @@ public class MainGUI extends JFrame {
 		this.add( saveData );
 		this.add( openData );
 		
+		// display scrollpane as big
+		events.setPreferredSize( new Dimension( this.getWidth() - 50 , 200 ) );
+		
+		// add the events in scroll pane
+		JScrollPane eventsPane = new JScrollPane( events );
+		this.add( eventsPane );
+		
 		this.setLayout( new FlowLayout() );
 		
 	}
@@ -93,7 +102,7 @@ public class MainGUI extends JFrame {
 		// hide / display delete / edit when mouse over
 		item.addMouseListener( new EventDisplayListener(delete, edit) );
 		
-		this.add( item );
+		events.add( item );
 	}
 	
 	private class EventActionListener implements ActionListener {

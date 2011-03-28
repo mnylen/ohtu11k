@@ -3,8 +3,12 @@ package fi.helsinki.cs.oato.gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.*;
+
 import fi.helsinki.cs.oato.Event;
 
 public class EditEvent extends JFrame {
@@ -23,6 +27,29 @@ public class EditEvent extends JFrame {
 	
 		this.add( description );
 		this.add( location );
+		
+		// set models for Spinners for
+		Calendar calendar = new GregorianCalendar();
+		Date initDate = calendar.getTime();
+		calendar.add(Calendar.YEAR, -1);
+		Date earliestDate = calendar.getTime();
+		calendar.add(Calendar.YEAR, 1);
+		Date latestDate = calendar.getTime();
+		SpinnerModel startModel = new SpinnerDateModel(initDate,
+		                             earliestDate,
+		                             latestDate,
+		                             Calendar.YEAR);
+		SpinnerModel endModel = new SpinnerDateModel(initDate,
+                earliestDate,
+                latestDate,
+                Calendar.YEAR);
+		
+		startTime.setModel( startModel );
+		endTime.setModel( endModel );
+		
+		new JSpinner.DateEditor( startTime );
+		new JSpinner.DateEditor( endTime );
+		
 		this.add( startTime );
 		this.add( endTime );
 		this.add( addButton );

@@ -142,15 +142,5 @@ public class MainGUI extends JFrame {
 		
 		
 	}
-	
-	/*
-	 * For testing purposes
-	 */
-	public static void main(String[] args) {
-		MainGUI m = new MainGUI();
-        /*
-		m.addEvent( EventFixtures.createDentistAppointment() );
-		m.addEvent( EventFixtures.createSoftwareEngineeringLecture() );*/
-	}
 
 }

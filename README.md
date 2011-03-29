@@ -16,12 +16,12 @@ At commandline in project directory:
 `java -cp lib/javacsv.jar:lib/joda-time-1.6.2.jar:lib/json_simple-1.1.jar:class fi.helsinki.cs.oato.gui.MainGUI`
 
 ## Commiting
-Setup your commiter name:
+###Setup your commiter name:
 
 1.  `git config --global user.name "Your Name"` and `git config --global user.email you@example.com`
  
-Commit your changes:
-1.  (edit files)
+###Commit your changes:
+1.  Edit files
 2.  `git commit -a`
 3.  `git push`
 

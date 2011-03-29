@@ -1,9 +1,9 @@
 # Mini project for Software Engineering course
 
 ##Prerequisites
-1.  JDK 6
-2.  git
-3.  ant
+1.  [JDK 6](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+2.  [git](http://git-scm.com/download)
+3.  [Apache ant](http://ant.apache.org/bindownload.cgi)
 
 ## Downloading
 1.  `cd` to your source directory

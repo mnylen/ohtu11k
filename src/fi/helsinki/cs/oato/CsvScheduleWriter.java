@@ -5,8 +5,8 @@ import com.csvreader.CsvWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import org.joda.time.format.ISODateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class CsvScheduleWriter extends ScheduleWriter {
     public static final String HEADER_START_DATE = "start";
@@ -18,7 +18,7 @@ public class CsvScheduleWriter extends ScheduleWriter {
     public static final String HEADER_LOCATION = "location";
     public static final int HEADER_LOCATION_INDEX = 3;
     public static final char SEPARATOR = ',';
-    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final DateTimeFormatter DATE_FORMATTER = ISODateTimeFormat.basicDateTimeNoMillis();
     public static final Charset CHARSET = Charset.forName("UTF-8");
     private static final int COLUMN_COUNT = 4;
 
@@ -52,8 +52,8 @@ public class CsvScheduleWriter extends ScheduleWriter {
 
     private void writeEventRecord(CsvWriter writer, Event event) throws IOException {
         String[] record = new String[COLUMN_COUNT];
-        record[HEADER_START_DATE_INDEX]  = DATE_FORMAT.format(event.getStartDate());
-        record[HEADER_END_DATE_INDEX]    = DATE_FORMAT.format(event.getEndDate());
+        record[HEADER_START_DATE_INDEX]  = DATE_FORMATTER.print(event.getStartDate());
+        record[HEADER_END_DATE_INDEX]    = DATE_FORMATTER.print(event.getEndDate());
         record[HEADER_DESCRIPTION_INDEX] = event.getDescription();
         record[HEADER_LOCATION_INDEX]    = event.getLocation();
         

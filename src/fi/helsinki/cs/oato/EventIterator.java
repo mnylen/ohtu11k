@@ -1,6 +1,7 @@
 package fi.helsinki.cs.oato;
 
 import java.util.*;
+import org.joda.time.DateTime;
 
 /**
  * Iterator over a collection of events. Returns events in ascending order by
@@ -69,13 +70,13 @@ class EventIterator implements Iterator<Event> {
      * event to <code>firstEvent</code> instance variable.
      */
     private void rewindToFirstUpcomingEvent() {
-        long timeMillis = System.currentTimeMillis();
+        DateTime now = new DateTime();
         Event event = null;
 
         while (this.innerIterator.hasNext()) {
             event = this.innerIterator.next();
 
-            if (event.getStartDate().getTime() >= timeMillis) {
+            if (event.compareTo(now) >= 0) {
                 break;
             }
         }

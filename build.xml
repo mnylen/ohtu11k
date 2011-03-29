@@ -1,4 +1,4 @@
-<project name="lzw" default="test" basedir=".">
+<project name="ohtu11k" default="test" basedir=".">
     <property name="src.java.dir" value="${basedir}/src" />
     <property name="src.test.dir" value="${basedir}/test" />
     <property name="build.dir" value="${basedir}/build/java" />
@@ -12,6 +12,12 @@
     <property name="jar.path" value="${dist.dir}/oato.jar" />
     <property name="main.class" value="fi.helsinki.cs.oato.gui.MainGUI" />
     
+    <path id="classpath">
+        <pathelement path="${lib.dir}/javacsv.jar" />
+        <pathelement path="${lib.dir}/joda-time-1.6.2.jar" />
+        <pathelement path="${lib.dir}/json_simple-1.1.jar" />
+    </path>
+
     <path id="test.classpath">
         <pathelement path="${lib.dir}/junit-4.8.2.jar" />
     </path>
@@ -31,12 +37,26 @@
     </target>
 
     <target name="compile" depends="mkdirs">
-        <javac srcdir="${src.java.dir}" destdir="${build.dir}" />
+        <javac srcdir="${src.java.dir}" destdir="${build.dir}">
+            <classpath>
+                <path refid="classpath" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main.class}" fork="true">
+            <classpath>
+                <pathelement location="${build.dir}" />
+                <path refid="classpath" />
+            </classpath>
+        </java>
     </target>
 
     <target name="compile-test" depends="compile">
         <javac srcdir="${src.test.dir}" destdir="${build.test.dir}">
             <classpath>
+                <path refid="classpath" />
                 <path refid="test.classpath" />
                 <pathelement location="${build.dir}" />
             </classpath>
@@ -54,6 +74,7 @@
     <target name="test" depends="compile-test">
         <junit printsummary="yes" haltonfailure="yes">
             <classpath>
+                <path refid="classpath" />
                 <path refid="test.classpath" />
                 <pathelement location="${build.dir}" />
                 <pathelement location="${build.test.dir}" />
@@ -74,7 +95,7 @@
                  author="true"
                  version="true"
                  use="true"
-                 windowtitle="Lempel-Ziv-Welch">
+                 windowtitle="OhTu Kevät 2011">
 
         </javadoc>
     </target>

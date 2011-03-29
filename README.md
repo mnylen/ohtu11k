@@ -3,17 +3,18 @@
 ##Prerequisites
 1.  JDK 6
 2.  git
+3.  ant
 
 ## Downloading
 1.  `cd` to your source directory
 2.  `git clone https://github.com/mnylen/ohtu11k.git`
 
 ## Compiling
-At commandline in project directory:
-`javac -d class -cp lib/javacsv.jar:lib/joda-time-1.6.2.jar:lib/json_simple-1.1.jar src/fi/helsinki/cs/oato/*java src/fi/helsinki/cs/oato/gui/*java`
+At commandline, in project directory:
+`ant`
 
 ## Running
-`java -cp lib/javacsv.jar:lib/joda-time-1.6.2.jar:lib/json_simple-1.1.jar:class fi.helsinki.cs.oato.gui.MainGUI`
+`ant run`
 
 ## Commiting
 ###Setup your commiter name:
@@ -29,10 +30,8 @@ At commandline in project directory:
 ## Testing
 <b>Do not commit code before running the tests!</b>
 
-### Compile
-`javac -d class -cp lib/javacsv.jar:lib/joda-time-1.6.2.jar:lib/json_simple-1.1.jar:lib/junit-4.8.2.jar:class test/fi/helsinki/cs/oato/*java`
+### Running
+`ant test`
 
-### Run
-`java -cp class:lib/javacsv.jar:lib/joda-time-1.6.2.jar:lib/json_simple-1.1.jar:lib/junit-4.8.2.jar fi.helsinki.cs.oato.TestRunner`
-
-Learn more: [Git Tutorial](http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html)
+## Further reading
+* [Git Tutorial](http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html)

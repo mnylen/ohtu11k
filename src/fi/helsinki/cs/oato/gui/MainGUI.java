@@ -58,8 +58,15 @@ public class MainGUI extends JFrame {
 		// display scrollpane as big
 		events.setPreferredSize( new Dimension( this.getWidth() - 50 , 200 ) );
 		
-		// add the events in scroll pane
-		JScrollPane eventsPane = new JScrollPane( events );
+		JTabbedPane eventsPane = new JTabbedPane();
+		
+		// add next events to a scroll pane
+		JScrollPane nextEventPane = new JScrollPane( events );
+		eventsPane.add("Future events", nextEventPane );
+		
+		// for demo only
+		eventsPane.add("All events", new JPanel() );
+		
 		this.add( eventsPane );
 		
 		this.setLayout( new FlowLayout() );
@@ -96,7 +103,7 @@ public class MainGUI extends JFrame {
 		} );
 		item.add( delete );
 		
-		item.setSize(500, 50);
+		item.setPreferredSize( new Dimension( events.getWidth() , 40 ) );
 		item.setBackground(  Color.PINK );
 		// add mouse over listener for this item
 		// hide / display delete / edit when mouse over
@@ -139,8 +146,9 @@ public class MainGUI extends JFrame {
 		}
 
 		public void mouseExited(MouseEvent e) {
-			// this.delete.setVisible(false);
-			// this.edit.setVisible(false);
+			// XXX don't act when inside the component
+			this.delete.setVisible(false);
+			this.edit.setVisible(false);
 		}
 
 		public void mousePressed(MouseEvent e) {

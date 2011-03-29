@@ -10,12 +10,16 @@
     <property name="dist.dir" value="${basedir}/dist" />
     <property name="lib.dir" value="${basedir}/lib" />
     <property name="jar.path" value="${dist.dir}/oato.jar" />
-    <property name="main.class" value="fi.helsinki.cs.oato.gui.MainGUI" />
+    <property name="main.class" value="fi.helsinki.cs.oato.Main" />
     
     <path id="classpath">
         <pathelement path="${lib.dir}/javacsv.jar" />
         <pathelement path="${lib.dir}/joda-time-1.6.2.jar" />
         <pathelement path="${lib.dir}/json_simple-1.1.jar" />
+        <pathelement path="${lib.dir}/commons-codec-1.4.jar" />
+        <pathelement path="${lib.dir}/commons-logging-1.1.1.jar" />
+        <pathelement path="${lib.dir}/httpclient-4.1.1.jar" />
+        <pathelement path="${lib.dir}/httpcore-4.1.jar" />
     </path>
 
     <path id="test.classpath">
@@ -37,7 +41,8 @@
     </target>
 
     <target name="compile" depends="mkdirs">
-        <javac srcdir="${src.java.dir}" destdir="${build.dir}">
+        <javac srcdir="${src.java.dir}" destdir="${build.dir}" debug="on">
+            <compilerarg value="-Xlint:unchecked" />
             <classpath>
                 <path refid="classpath" />
             </classpath>
@@ -54,7 +59,8 @@
     </target>
 
     <target name="compile-test" depends="compile">
-        <javac srcdir="${src.test.dir}" destdir="${build.test.dir}">
+        <javac srcdir="${src.test.dir}" destdir="${build.test.dir}" debug="on">
+            <compilerarg value="-Xlint:unchecked" />
             <classpath>
                 <path refid="classpath" />
                 <path refid="test.classpath" />

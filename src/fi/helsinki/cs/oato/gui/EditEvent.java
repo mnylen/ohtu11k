@@ -21,6 +21,7 @@ public class EditEvent extends JFrame {
     private JSpinner startTime = new JSpinner();
     private JSpinner endTime = new JSpinner();
     private JButton addButton = new JButton("Add event");
+    private JButton importButton = new JButton("Import course…");
     private JButton cancelButton = new JButton("Cancel");
 
     public EditEvent() {
@@ -57,6 +58,7 @@ public class EditEvent extends JFrame {
         this.add( startTime );
         this.add( endTime );
         this.add( addButton );
+        this.add( importButton );
         this.add( cancelButton );
         
         cancelButton.addActionListener( new ActionListener() {
@@ -73,6 +75,13 @@ public class EditEvent extends JFrame {
             }
         } );
         
+        importButton.addActionListener( new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        } );
+
         this.setLayout( new FlowLayout() );
         this.pack();
         this.setVisible(true);		

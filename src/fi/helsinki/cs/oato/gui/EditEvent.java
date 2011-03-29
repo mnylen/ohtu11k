@@ -16,6 +16,7 @@ public class EditEvent extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JTextField description = new JTextField("Description", 20);
+	private JButton importFromInterface = new JButton("Look from Web");
 	private JTextField location = new JTextField("Location", 20);
 	private JSpinner startTime = new JSpinner();
 	private JSpinner endTime = new JSpinner();
@@ -27,6 +28,7 @@ public class EditEvent extends JFrame {
 	
 		this.add( description );
 		this.add( location );
+		this.add( importFromInterface );
 		
 		// set models for Spinners for
 		Calendar calendar = new GregorianCalendar();

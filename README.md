@@ -17,8 +17,7 @@ At commandline in project directory:
 
 ## Commiting
 Setup your commiter name:
-1. `git config --global user.name "Your Name"` and
-   `git config --global user.email you@example.com`
+1. `git config --global user.name "Your Name"` and `git config --global user.email you@example.com`
  
 Commit your changes:
 1. (edit files)

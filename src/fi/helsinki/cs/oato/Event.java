@@ -1,13 +1,14 @@
 package fi.helsinki.cs.oato;
 
+import org.joda.time.DateTime;
 import java.util.Date;
 
 /**
  * Represents an event that occurs at specific location and time.
  */
 public class Event implements Comparable<Event> {
-    private Date startDate;
-    private Date endDate;
+    private DateTime startDate;
+    private DateTime endDate;
     private String description;
     private String location;
 
@@ -19,7 +20,7 @@ public class Event implements Comparable<Event> {
      * @param description the description
      * @param location the location
      */
-    public Event(Date startDate, Date endDate, String description,
+    public Event(DateTime startDate, DateTime endDate, String description,
                  String location) {
 
         this.startDate   = startDate;
@@ -32,15 +33,23 @@ public class Event implements Comparable<Event> {
      * Get event start date.
      * @return the start date
      */
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
+    }
+
+    /**
+     * Get event start date as java.util.Date.
+     * @return the start date
+     */
+    public Date getStartJavaDate() {
+        return new Date(startDate.getMillis());
     }
 
      /**
      * Set event start date.
      * @param startDate the start date
      */
-    public void setStartDate(Date startDate) {
+    public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
     }
 
@@ -48,15 +57,23 @@ public class Event implements Comparable<Event> {
      * Get event end date.
      * @return the end date
      */
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
+    }
+
+     /**
+     * Get event end date as java.util.Date.
+     * @return the end date
+     */
+    public Date getEndJavaDate() {
+        return new Date(endDate.getMillis());
     }
 
      /**
      * Set event end date.
      * @param endDate the end date
      */
-    public void setEndDate(Date endDate) {
+    public void setEndDate(DateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -108,6 +125,18 @@ public class Event implements Comparable<Event> {
         }
     }
     
+    /**
+     * Compares this event to given LocalDateTime.
+     *
+     * @param time time to compare to
+     * @return <code>-1</code> if this event starts earlier than time;
+     *         <code>0</code> if the events start exactly at time;
+     *         <code>1</code> if this event starts later than time
+     */
+    public int compareTo(DateTime time) {
+		return this.getStartDate().compareTo(time);
+    }
+    
     public boolean equals(Object another) {
         if (!(another instanceof Event)) {
             return false;
@@ -129,6 +158,6 @@ public class Event implements Comparable<Event> {
     
     public String toString() {
     	// FIXME: deprecated?
-    	return getDescription() + " " + startDate.getHours() + ":" + startDate.getMinutes() + " [" + getLocation() + "]";
+    	return getDescription() + " " + startDate.getHourOfDay() + ":" + startDate.getMinuteOfHour() + " [" + getLocation() + "]";
     }
 }

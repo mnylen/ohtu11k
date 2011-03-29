@@ -67,11 +67,11 @@ public class CsvScheduleWriterTest {
         assertThat(reader.readRecord(), is(true));
         
         assertThat(reader.get(CsvScheduleWriter.HEADER_START_DATE_INDEX),
-                equalTo(CsvScheduleWriter.DATE_FORMAT.format(
+                equalTo(CsvScheduleWriter.DATE_FORMATTER.print(
                         event.getStartDate())));
 
         assertThat(reader.get(CsvScheduleWriter.HEADER_END_DATE_INDEX),
-                equalTo(CsvScheduleWriter.DATE_FORMAT.format(
+                equalTo(CsvScheduleWriter.DATE_FORMATTER.print(
                         event.getEndDate())));
 
         assertThat(reader.get(CsvScheduleWriter.HEADER_DESCRIPTION_INDEX),

@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -47,7 +46,7 @@ public class CsvScheduleReaderTest {
         assertThat(readSchedule.allEvents().contains(this.softwareEngineeringLecture), is(true));
     }
 
-    @Test(expected=ParseException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testReadWithInvalidDates() throws Exception {
         byte[] rawData = ("start,end,description,location\n" +
                          "invalid date,another invalid date,Some event,Some location\n").getBytes();

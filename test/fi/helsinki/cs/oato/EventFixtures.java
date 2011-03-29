@@ -1,7 +1,7 @@
 package fi.helsinki.cs.oato;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 
 public abstract class EventFixtures {
     public static final long ONE_HOUR  = 3600000;
@@ -10,32 +10,32 @@ public abstract class EventFixtures {
     
     public static Event createDentistAppointment() {
         return new Event(
-                new GregorianCalendar(2011, 3, 25, 16, 0, 0).getTime(),
-                new GregorianCalendar(2011, 3, 25, 17, 0, 0).getTime(),
+                new DateTime(2011, 3, 25, 16, 0, 0, 0),
+                new DateTime(2011, 3, 25, 17, 0, 0, 0),
                 "Dentist",
                 "Unit Avenue 768");
     }
 
     public static Event createSoftwareEngineeringLecture() {
         return new Event(
-                new GregorianCalendar(2011, 3, 25, 12, 0, 0).getTime(),
-                new GregorianCalendar(2011, 3, 25, 14, 0, 0).getTime(),
+                new DateTime(2011, 3, 25, 12, 0, 0,0),
+                new DateTime(2011, 3, 25, 14, 0, 0, 0),
                 "Lecture on Software Engineering",
                 "Exactum, CK112");
     }
 
     public static Event createUpcomingEvent(long millisInFuture) {
         return new Event(
-                new Date(System.currentTimeMillis()+millisInFuture),
-                new Date(System.currentTimeMillis()+millisInFuture),
+                new DateTime(System.currentTimeMillis()+millisInFuture),
+                new DateTime(System.currentTimeMillis()+millisInFuture),
                 "Event",
                 "Everywhere");
     }
 
     public static Event createPastEvent(long millisInPast) {
         return new Event(
-                new Date(System.currentTimeMillis()-millisInPast),
-                new Date(System.currentTimeMillis()-millisInPast),
+                new DateTime(System.currentTimeMillis()-millisInPast),
+                new DateTime(System.currentTimeMillis()-millisInPast),
                 "Event",
                 "Everywhere");
     }

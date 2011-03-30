@@ -1,16 +1,16 @@
 package fi.helsinki.cs.oato.gui;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
 
+/***
+ * Display UI for adding and editing events.
+ * 
+ **/
 public class EditEvent extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -21,9 +21,15 @@ public class EditEvent extends JFrame {
     private JSpinner startTime = new JSpinner();
     private JSpinner endTime = new JSpinner();
     private JButton addButton = new JButton("Add event");
-    private JButton importButton = new JButton("Import course…");
     private JButton cancelButton = new JButton("Cancel");
+    
+    // record if we are in mode that an event is created
+    private boolean createNew = false;
 
+    /**
+     * Creates new clean (empty) view for adding an event. 
+     * 
+     **/
     public EditEvent() {
         super();
 
@@ -58,7 +64,6 @@ public class EditEvent extends JFrame {
         this.add( startTime );
         this.add( endTime );
         this.add( addButton );
-        this.add( importButton );
         this.add( cancelButton );
         
         cancelButton.addActionListener( new ActionListener() {
@@ -72,13 +77,7 @@ public class EditEvent extends JFrame {
             
             public void actionPerformed(ActionEvent e) {
                 // TODO: add real action
-            }
-        } );
-        
-        importButton.addActionListener( new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                
+            	// TODO: debends which mode we're on
             }
         } );
 
@@ -87,6 +86,12 @@ public class EditEvent extends JFrame {
         this.setVisible(true);		
     }
 
+    /**
+     * Create new vier for editing event given.
+     * 
+     *  @param e the view for editing.
+     * 
+     **/
     public EditEvent(Event e) {
         this();
         
@@ -94,6 +99,8 @@ public class EditEvent extends JFrame {
         location.setText( e.getLocation() );
         startTime.getModel().setValue(e.getStartJavaDate());
         endTime.getModel().setValue(e.getStartJavaDate());
+        
+        createNew = false;
     }
 
 }

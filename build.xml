@@ -85,6 +85,7 @@
                 <pathelement location="${build.dir}" />
                 <pathelement location="${build.test.dir}" />
             </classpath>
+            <!-- <formatter type="brief" usefile="false" /> -->
 
             <batchtest fork="yes">
                 <fileset dir="${src.test.dir}">

@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 /**
     A course with a start date, an end date and a description (name). Fetched from online by OnlineCourseSource.
 */
-public class Course {
+public class Course implements Comparable<Course>{
     private String description;
     private DateTime startDate;
     private DateTime endDate;
@@ -35,5 +35,15 @@ public class Course {
     public String toString() {
         return getDescription() + " " + OnlineCourseSource.formatter.print(startDate) + ".." +
                OnlineCourseSource.formatter.print(endDate);
+    }
+
+    public int compareTo(Course other) {
+        return this.getStartDate().compareTo(other.getStartDate());
+    }
+
+    public boolean equals(Course other) {
+        return this.getDescription().equals(other.getDescription()) &&
+               this.getStartDate().equals(other.getStartDate()) &&
+               this.getEndDate().equals(other.getEndDate());
     }
 }

@@ -8,22 +8,46 @@ import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
 
+/**
+ * Create main UI for the application. 
+ * 
+ **/
 public class MainGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    private JPanel events = new JPanel();
+    private EventList futureEvents = new EventList();
+    private EventList allEvents = new EventList();
 
+    /**
+     * Create new GUI. Defaults to 500 x 500.
+     * 
+     **/
     public MainGUI(){
+        this(500, 500);
+    }
+    
+    /**
+     * Creates new GUI. Size given.
+     * 
+     *  @param width width of the screen
+     *  @param height height of the screen
+     **/
+    public MainGUI(int width, int height) {
         super();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
-        this.setSize(500, 500);
+        this.setSize(width, height);
         createUI();
         this.setVisible(true);
     }
 
+    /**
+     * Actually creates the UI 
+     **/
     private void createUI() {
+    	
+    	// UI buttons
         JButton addEvent = new JButton("Add event");
         JButton saveData = new JButton("Save");
         JButton openData = new JButton("Open");
@@ -52,21 +76,19 @@ public class MainGUI extends JFrame {
             }
         });
         
+        // display buttons
         this.add( addEvent );
         this.add( saveData );
         this.add( openData );
         
-        // display scrollpane as big
-        events.setPreferredSize( new Dimension( this.getWidth() - 50 , 200 ) );
+        Dimension eventDataSize = new Dimension( this.getWidth() - 50 , 350 );
+        futureEvents.setPreferredSize( eventDataSize );
+        allEvents.setPreferredSize(eventDataSize);
         
         JTabbedPane eventsPane = new JTabbedPane();
         
-        // add next events to a scroll pane
-        JScrollPane nextEventPane = new JScrollPane( events );
-        eventsPane.add("Future events", nextEventPane );
-        
-        // for demo only
-        eventsPane.add("All events", new JPanel() );
+        eventsPane.add("Future events", futureEvents );
+        eventsPane.add("All events", allEvents );
         
         this.add( eventsPane );
         
@@ -76,89 +98,7 @@ public class MainGUI extends JFrame {
 
     // should take event
     public void addEvent(Event event) {
-        // create a new panel for showing this item
-        JPanel item = new JPanel();
-        item.setLayout( new FlowLayout() );
-        
-        // show actual event
-        JLabel text = new JLabel("text " + event.toString() );
-        item.add( text );
-        
-        // button for editing this event
-        JButton edit = new JButton("Edit");
-        item.add( edit );
-        edit.setVisible(false);
-        edit.addActionListener( new EventActionListener(event) );
-        
-        // button for deleting this event
-        JButton delete = new JButton("Delete");
-        delete.setSize(100, 50);
-        delete.setVisible(false);
-        delete.addActionListener( new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                // TODO: a mockup solution
-                JButton b = (JButton)(e.getSource());
-                b.getParent().setVisible(false);
-            }
-        } );
-        item.add( delete );
-        
-        item.setPreferredSize( new Dimension( events.getWidth() , 40 ) );
-        item.setBackground(  Color.PINK );
-        // add mouse over listener for this item
-        // hide / display delete / edit when mouse over
-        item.addMouseListener( new EventDisplayListener(delete, edit) );
-        
-        events.add( item );
-    }
-
-    private class EventActionListener implements ActionListener {
-
-        private Event event;
-        
-        public EventActionListener(Event event) {
-            this.event = event;
-        }
-        
-        public void actionPerformed(ActionEvent e) {
-            new EditEvent(this.event);
-            
-        }
-        
-        
-    }
-
-    private class EventDisplayListener implements MouseListener {
-
-        JButton delete;
-        JButton edit;
-        
-        public EventDisplayListener(JButton delete, JButton edit) {
-            this.delete = delete;
-            this.edit = edit;
-        }
-        
-        public void mouseClicked(MouseEvent e) {}
-
-        public void mouseEntered(MouseEvent e) {
-            this.delete.setVisible(true);
-            this.edit.setVisible(true);
-        }
-
-        public void mouseExited(MouseEvent e) {
-            // XXX don't act when inside the component
-            this.delete.setVisible(false);
-            this.edit.setVisible(false);
-        }
-
-        public void mousePressed(MouseEvent e) {
-        }
-
-        public void mouseReleased(MouseEvent e) {
-        }
-        
-        
+        futureEvents.addEvent(event);
     }
 
 }

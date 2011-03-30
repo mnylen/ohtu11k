@@ -8,11 +8,17 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import org.joda.time.DateTime;
 
+import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
 import static fi.helsinki.cs.oato.Helpers.*;
 
+/***
+ * Display UI for adding and editing events.
+ * 
+ **/
 public class EditEvent extends JFrame {
 
     public static final String DATE_FORMAT = "dd.MM.yyyy HH:mm ";
@@ -34,7 +40,14 @@ public class EditEvent extends JFrame {
     private JButton addButton = new JButton("Add event");
     private JButton okButton = new JButton("OK");
     private JButton cancelButton = new JButton("Cancel");
+    
+    // record if we are in mode that an event is created
+    private boolean createNew = true;
 
+    /**
+     * Creates new clean (empty) view for adding an event. 
+     * 
+     **/
     public EditEvent() {
         super("Add event");
         DateTime now = (new DateTime()).withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0);
@@ -43,7 +56,7 @@ public class EditEvent extends JFrame {
 
     public EditEvent(Event e) {
         super("Edit event");
-
+        createNew = false;
         initView(e);
     }
 
@@ -104,6 +117,8 @@ public class EditEvent extends JFrame {
 
             public void actionPerformed(ActionEvent e) {
 
+                // TODO: add real action
+            	// TODO: debends which mode we're on
             }
         } );
 

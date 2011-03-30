@@ -12,7 +12,7 @@ public class MainGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    private JPanel events = new JPanel();
+    private EventList futureEvents = new EventList();
 
     public MainGUI(){
         super();
@@ -56,13 +56,11 @@ public class MainGUI extends JFrame {
         this.add( openData );
         
         // display scrollpane as big
-        events.setPreferredSize( new Dimension( this.getWidth() - 50 , 200 ) );
+        futureEvents.setPreferredSize( new Dimension( this.getWidth() - 50 , 200 ) );
         
         JTabbedPane eventsPane = new JTabbedPane();
         
-        // add next events to a scroll pane
-        JScrollPane nextEventPane = new JScrollPane( events );
-        eventsPane.add("Future events", nextEventPane );
+        eventsPane.add("Future events", futureEvents );
         
         // for demo only
         eventsPane.add("All events", new JPanel() );
@@ -75,41 +73,7 @@ public class MainGUI extends JFrame {
 
     // should take event
     public void addEvent(Event event) {
-        // create a new panel for showing this item
-        JPanel item = new JPanel();
-        item.setLayout( new FlowLayout() );
-        
-        // show actual event
-        JLabel text = new JLabel("text " + event.toString() );
-        item.add( text );
-        
-        // button for editing this event
-        JButton edit = new JButton("Edit");
-        item.add( edit );
-        edit.setVisible(false);
-        edit.addActionListener( new EventActionListener(event) );
-        
-        // button for deleting this event
-        JButton delete = new JButton("Delete");
-        delete.setSize(100, 50);
-        delete.setVisible(false);
-        delete.addActionListener( new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                // TODO: a mockup solution
-                JButton b = (JButton)(e.getSource());
-                b.getParent().setVisible(false);
-            }
-        } );
-        item.add( delete );
-        
-        item.setPreferredSize( new Dimension( events.getWidth() , 40 ) );
-        item.setBackground(  Color.PINK );
-        // add mouse over listener for this item
-        // hide / display delete / edit when mouse over
-        item.addMouseListener( new EventDisplayListener(delete, edit) );
-        
-        events.add( item );
+        futureEvents.addEvent(event);
     }
 
     private class EventActionListener implements ActionListener {

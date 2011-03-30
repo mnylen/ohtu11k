@@ -8,21 +8,45 @@ import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
 
+/**
+ * Create main UI for the application. 
+ * 
+ **/
 public class MainGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
     private EventList futureEvents = new EventList();
+    private EventList allEvents = new EventList();
 
+    /**
+     * Create new GUI. Defaults to 500 x 500.
+     * 
+     **/
     public MainGUI(){
+        this(500, 500);
+    }
+    
+    /**
+     * Creates new GUI. Size given.
+     * 
+     *  @param width width of the screen
+     *  @param height height of the screen
+     **/
+    public MainGUI(int width, int height) {
         super();
         this.pack();
-        this.setSize(500, 500);
+        this.setSize(width, height);
         createUI();
         this.setVisible(true);
     }
 
+    /**
+     * Actually creates the UI 
+     **/
     private void createUI() {
+    	
+    	// UI buttons
         JButton addEvent = new JButton("Add event");
         JButton saveData = new JButton("Save");
         JButton openData = new JButton("Open");
@@ -51,19 +75,19 @@ public class MainGUI extends JFrame {
             }
         });
         
+        // display buttons
         this.add( addEvent );
         this.add( saveData );
         this.add( openData );
         
-        // display scrollpane as big
-        futureEvents.setPreferredSize( new Dimension( this.getWidth() - 50 , 200 ) );
+        Dimension eventDataSize = new Dimension( this.getWidth() - 50 , 350 );
+        futureEvents.setPreferredSize( eventDataSize );
+        allEvents.setPreferredSize(eventDataSize);
         
         JTabbedPane eventsPane = new JTabbedPane();
         
         eventsPane.add("Future events", futureEvents );
-        
-        // for demo only
-        eventsPane.add("All events", new JPanel() );
+        eventsPane.add("All events", allEvents );
         
         this.add( eventsPane );
         
@@ -74,54 +98,6 @@ public class MainGUI extends JFrame {
     // should take event
     public void addEvent(Event event) {
         futureEvents.addEvent(event);
-    }
-
-    private class EventActionListener implements ActionListener {
-
-        private Event event;
-        
-        public EventActionListener(Event event) {
-            this.event = event;
-        }
-        
-        public void actionPerformed(ActionEvent e) {
-            new EditEvent(this.event);
-            
-        }
-        
-        
-    }
-
-    private class EventDisplayListener implements MouseListener {
-
-        JButton delete;
-        JButton edit;
-        
-        public EventDisplayListener(JButton delete, JButton edit) {
-            this.delete = delete;
-            this.edit = edit;
-        }
-        
-        public void mouseClicked(MouseEvent e) {}
-
-        public void mouseEntered(MouseEvent e) {
-            this.delete.setVisible(true);
-            this.edit.setVisible(true);
-        }
-
-        public void mouseExited(MouseEvent e) {
-            // XXX don't act when inside the component
-            this.delete.setVisible(false);
-            this.edit.setVisible(false);
-        }
-
-        public void mousePressed(MouseEvent e) {
-        }
-
-        public void mouseReleased(MouseEvent e) {
-        }
-        
-        
     }
 
 }

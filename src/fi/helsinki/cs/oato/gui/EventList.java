@@ -1,34 +1,49 @@
 package fi.helsinki.cs.oato.gui;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
 
+/**
+ * UI component for showing Events in a list. 
+ **/
 public class EventList extends JScrollPane {
 	
 	/**
-	 * 
+	 * Serial version UID.
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Actual container for the data.
+	 **/
 	private JPanel content = new JPanel();
 	
+	/**
+	 * Creates new empty list of events.
+	 **/
 	public EventList() {
 		this.setViewportView( content );
 	}
 	
+	/**
+	 * Sets the preferred size of this UI component.
+	 * 
+	 * @param preferredSize Preferred size of UI component.
+	 **/
 	public void setPreferredSize(Dimension preferredSize) {
 		this.content.setPreferredSize( preferredSize );
 	}
 	
-	// should take event
+	/**
+	 * Adds new event to this UI view. 
+	 * 
+	 * Note, this does not promise, that the event would be put to correct position, it is just laid below all other events.
+	 * 
+	 * @param event The event to be added.
+	 **/
 	public void addEvent(Event event) {
 		// create a new panel for showing this item
 		JPanel item = new JPanel();
@@ -59,7 +74,6 @@ public class EventList extends JScrollPane {
 		item.add( delete );
 		
 		item.setPreferredSize( new Dimension( content.getWidth() , 40 ) );
-		// item.setBackground(  Color.PINK );
 		// add mouse over listener for this item
 		// hide / display delete / edit when mouse over
 		item.addMouseListener( new EventDisplayListener(delete, edit) );
@@ -67,6 +81,10 @@ public class EventList extends JScrollPane {
 		this.content.add( item );
 	}
 	
+	/**
+	 * Handles the button pressing from "Edit"-button. 
+	 * 
+	 **/
 	private class EventActionListener implements ActionListener {
 
 		private Event event;
@@ -77,12 +95,13 @@ public class EventList extends JScrollPane {
 		
 		public void actionPerformed(ActionEvent e) {
 			new EditEvent(this.event);
-			
 		}
-		
 		
 	}
 	
+	/**
+	 * Implements the hover-effect of "Delete" and "Edit"-buttons. 
+	 **/
 	private class EventDisplayListener implements MouseListener {
 
 		JButton delete;

@@ -1,99 +1,135 @@
 package fi.helsinki.cs.oato.gui;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import static java.awt.FlowLayout.*;
+import java.awt.event.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import org.joda.time.DateTime;
 
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
+import static fi.helsinki.cs.oato.Helpers.*;
 
 public class EditEvent extends JFrame {
 
+    public static final String DATE_FORMAT = "dd.MM.yyyy HH:mm ";
+    
     private static final long serialVersionUID = 1L;
 
-    private JTextField description = new JTextField("Description", 20);
-    private JButton importFromInterface = new JButton("Look from Web");
-    private JTextField location = new JTextField("Location", 20);
-    private JSpinner startTime = new JSpinner();
-    private JSpinner endTime = new JSpinner();
-    private JButton addButton = new JButton("Add event");
+    private JPanel importPanel = new JPanel(new FlowLayout(RIGHT));
     private JButton importButton = new JButton("Import course…");
+    private JPanel centerPanel;
+    private JLabel descriptionLabel = new JLabel("Description");
+    private JTextField description = new JTextField(0);
+    private JLabel locationLabel = new JLabel("Location");
+    private JTextField location = new JTextField(0);
+    private JLabel startTimeLabel = new JLabel("Start");
+    private JSpinner startTime = new JSpinner();
+    private JLabel endTimeLabel = new JLabel("End");
+    private JSpinner endTime = new JSpinner();
+    private JPanel buttonPanel = new JPanel(new FlowLayout(RIGHT));
+    private JButton addButton = new JButton("Add event");
+    private JButton okButton = new JButton("OK");
     private JButton cancelButton = new JButton("Cancel");
 
     public EditEvent() {
-        super();
+        super("Add event");
+        DateTime now = (new DateTime()).withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0);
+        initView(new Event(now, now, "", ""));
+    }
 
-        this.add( description );
-        this.add( location );
-        this.add( importFromInterface );
+    public EditEvent(Event e) {
+        super("Edit event");
+
+        initView(e);
+    }
+
+    private void initView(Event e) {
+        setLayout(new BorderLayout());
         
-        // set models for Spinners for
-        Calendar calendar = new GregorianCalendar();
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
-        calendar.set(Calendar.MINUTE, 0);
-        Date initDate = calendar.getTime();
-        calendar.add(Calendar.YEAR, -1);
-        Date earliestDate = calendar.getTime();
-        calendar.add(Calendar.YEAR, 2);
-        Date latestDate = calendar.getTime();
-        SpinnerModel startModel = new SpinnerDateModel(initDate,
-                                        earliestDate,
-                                        latestDate,
-                                        Calendar.YEAR);
-        SpinnerModel endModel = new SpinnerDateModel(initDate,
-            earliestDate,
-            latestDate,
-            Calendar.YEAR);
+        importPanel.add(importButton);
+        add(importPanel, BorderLayout.NORTH);
+
+        centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS));
+        add(centerPanel, BorderLayout.CENTER);
+
+        descriptionLabel.setLabelFor(description);
+        setLeft(descriptionLabel);
+        setLeft(description);
+        centerPanel.add(descriptionLabel);
+        centerPanel.add(description);
         
-        startTime.setModel( startModel );
-        endTime.setModel( endModel );
-        
-        new JSpinner.DateEditor( startTime );
-        new JSpinner.DateEditor( endTime );
-        
-        this.add( startTime );
-        this.add( endTime );
-        this.add( addButton );
-        this.add( importButton );
-        this.add( cancelButton );
-        
+        locationLabel.setLabelFor(location);
+        setLeft(locationLabel);
+        setLeft(location);
+        centerPanel.add(locationLabel);
+        centerPanel.add(location);
+
+        setSpinnerModels(e.getStartDate(), e.getEndDate());
+        centerPanel.add(startTimeLabel);
+        setLeft(startTimeLabel);
+        setLeft(startTime);
+        centerPanel.add(startTime);
+        centerPanel.add(endTimeLabel);
+        setLeft(endTimeLabel);
+        setLeft(endTime);
+        centerPanel.add(endTime);
+
+        add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.add(addButton);
+        buttonPanel.add(cancelButton);
+
+        description.setText( e.getDescription() );
+        location.setText( e.getLocation() );
+
         cancelButton.addActionListener( new ActionListener() {
-            
+
             public void actionPerformed(ActionEvent e) {
                 EditEvent.this.dispose();
             }
         } );
-        
+
         addButton.addActionListener( new ActionListener() {
-            
+
             public void actionPerformed(ActionEvent e) {
-                // TODO: add real action
+
             }
         } );
-        
+
         importButton.addActionListener( new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                
+
             }
         } );
 
-        this.setLayout( new FlowLayout() );
         this.pack();
-        this.setVisible(true);		
+        this.setVisible(true);
     }
 
-    public EditEvent(Event e) {
-        this();
+    private void setSpinnerModels(DateTime eventStart, DateTime eventEnd) {
+        SpinnerModel startModel = new SpinnerDateModel(toJavaDate(eventStart),
+                                        toJavaDate(eventStart.minusYears(1)),
+                                        toJavaDate(eventStart.plusYears(1)),
+                                        Calendar.YEAR);
+        SpinnerModel endModel = new SpinnerDateModel(toJavaDate(eventEnd),
+            toJavaDate(eventEnd.minusYears(1)),
+            toJavaDate(eventEnd.plusYears(1)),
+            Calendar.DAY_OF_MONTH);
+
+        startTime.setModel( startModel );
+        endTime.setModel( endModel );
+
+        startTime.setEditor(new JSpinner.DateEditor(startTime, DATE_FORMAT));
+        endTime.setEditor(new JSpinner.DateEditor(endTime, DATE_FORMAT));
         
-        description.setText( e.getDescription() );
-        location.setText( e.getLocation() );
-        startTime.getModel().setValue(e.getStartJavaDate());
-        endTime.getModel().setValue(e.getStartJavaDate());
     }
 
+    private void setLeft(JComponent c) {
+        c.setAlignmentX(Component.LEFT_ALIGNMENT);
+    }
 }

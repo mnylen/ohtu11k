@@ -33,10 +33,10 @@ public class OnlineCourseSource {
     public List<Course> getCourses() {
         if (!ready) {
             /* Error! You should not try to get empty course list, but check readiness with isReady() first */
-            return (new ArrayList<Course>());
+            return Collections.unmodifiableList(new ArrayList<Course>());
         }
 
-        return courseList;
+        return Collections.unmodifiableList(courseList);
     }
 
     class FetcherThread extends Thread {

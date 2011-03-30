@@ -16,6 +16,7 @@ public class MainGUI extends JFrame {
 
     public MainGUI(){
         super();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setSize(500, 500);
         createUI();

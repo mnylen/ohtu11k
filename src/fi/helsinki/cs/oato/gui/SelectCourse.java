@@ -12,6 +12,8 @@ import javax.swing.border.*;
 import fi.helsinki.cs.oato.*;
 import fi.helsinki.cs.oato.Event;
 import static fi.helsinki.cs.oato.Helpers.*;
+import static fi.helsinki.cs.oato.Strings.*;
+
 
 public class SelectCourse extends JDialog {
     private EditEvent parent;
@@ -25,11 +27,11 @@ public class SelectCourse extends JDialog {
     private JList list = new JList(new Vector<Object>(Main.onlineCourses.getCourses()));
     private JScrollPane listScroller = new JScrollPane(list);
     private JPanel buttons = new JPanel(new FlowLayout(RIGHT));
-    private JButton okButton = new JButton("OK");
-    private JButton cancelButton = new JButton("Cancel");
+    private JButton okButton = new JButton(localize("OK"));
+    private JButton cancelButton = new JButton(localize("Cancel"));
     
     public SelectCourse(EditEvent parent) {
-        super(parent, "Select course");
+        super(parent, localize("Select course"));
         this.parent = parent;
 
         initView();

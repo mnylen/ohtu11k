@@ -2,6 +2,7 @@ package fi.helsinki.cs.oato;
 
 import java.util.*;
 import org.joda.time.DateTime;
+import static fi.helsinki.cs.oato.Strings.*;
 
 /**
  * Iterator over a collection of events. Returns events in ascending order by
@@ -62,7 +63,7 @@ class EventIterator implements Iterator<Event> {
      */
     public void remove() {
         throw new UnsupportedOperationException(
-                "remove() operation is not supported by EventIterator");
+                localize("remove() operation is not supported by EventIterator"));
     }
 
     /**

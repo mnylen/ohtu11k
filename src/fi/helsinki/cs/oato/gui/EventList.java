@@ -5,6 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
+import static fi.helsinki.cs.oato.Strings.*;
+
 
 /**
  * UI component for showing Events in a list. 
@@ -54,13 +56,13 @@ public class EventList extends JScrollPane {
 		item.add( text );
 		
 		// button for editing this event
-		JButton edit = new JButton("Edit");
+		JButton edit = new JButton(localize("Edit"));
 		item.add( edit );
 		edit.setVisible(false);
 		edit.addActionListener( new EventActionListener(event) );
 		
 		// button for deleting this event
-		JButton delete = new JButton("Delete");
+		JButton delete = new JButton(localize("Delete"));
 		delete.setSize(100, 50);
 		delete.setVisible(false);
 		delete.addActionListener( new ActionListener() {

@@ -14,6 +14,7 @@ import javax.swing.border.*;
 import fi.helsinki.cs.oato.*;
 import fi.helsinki.cs.oato.Event;
 import static fi.helsinki.cs.oato.Helpers.*;
+import static fi.helsinki.cs.oato.Strings.*;
 
 /***
  * Display UI for adding and editing events.
@@ -32,29 +33,29 @@ public class EditEvent extends JFrame {
     private JPanel centerPanel;
     
     private JPanel importPanel = new JPanel(new FlowLayout(RIGHT));
-    private JButton importButton = new JButton("Import course…");
+    private JButton importButton = new JButton(localize("Import course…"));
     
-    private JLabel descriptionLabel = new JLabel("Description");
+    private JLabel descriptionLabel = new JLabel(localize("Description"));
     private JTextField description = new JTextField(0);
     
-    private JLabel locationLabel = new JLabel("Location");
+    private JLabel locationLabel = new JLabel(localize("Location"));
     private JTextField location = new JTextField(0);
     
-    private JLabel startTimeLabel = new JLabel("Start");
+    private JLabel startTimeLabel = new JLabel(localize("Start"));
     private JSpinner startTime = new JSpinner();
-    private JLabel endTimeLabel = new JLabel("End");
+    private JLabel endTimeLabel = new JLabel(localize("End"));
     private JSpinner endTime = new JSpinner();
 
-    private JCheckBox repeat = new JCheckBox("Repeat event");
+    private JCheckBox repeat = new JCheckBox(localize("Repeat event"));
     private JPanel repeatPanel;
-    private JLabel repeatLabel = new JLabel("Repeat on same weekday between");
+    private JLabel repeatLabel = new JLabel(localize("Repeat on same weekday between"));
     private JSpinner repeatStart = new JSpinner();
     private JSpinner repeatEnd = new JSpinner();
     
     private JPanel buttonPanel = new JPanel(new FlowLayout(RIGHT));
-    private JButton addButton = new JButton("Add event");
-    private JButton okButton = new JButton("OK");
-    private JButton cancelButton = new JButton("Cancel");
+    private JButton addButton = new JButton(localize("Add event"));
+    private JButton okButton = new JButton(localize("OK"));
+    private JButton cancelButton = new JButton(localize("Cancel"));
     
     // record if we are in mode that an event is created
     private boolean createNew = true;
@@ -64,13 +65,13 @@ public class EditEvent extends JFrame {
      * 
      **/
     public EditEvent() {
-        super("Add event");
+        super(localize("Add event"));
         DateTime now = (new DateTime()).withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0);
         initView(new Event(now, now.plusHours(2), "", ""));
     }
 
     public EditEvent(Event e) {
-        super("Edit event");
+        super(localize("Edit event"));
         createNew = false;
         initView(e);
     }

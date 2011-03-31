@@ -7,6 +7,7 @@ import java.util.EventListener;
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.Event;
+import static fi.helsinki.cs.oato.Strings.*;
 
 /**
  * Create main UI for the application. 
@@ -48,9 +49,9 @@ public class MainGUI extends JFrame {
     private void createUI() {
     	
     	// UI buttons
-        JButton addEvent = new JButton("Add event");
-        JButton saveData = new JButton("Save");
-        JButton openData = new JButton("Open");
+        JButton addEvent = new JButton(localize("Add event"));
+        JButton saveData = new JButton(localize("Save"));
+        JButton openData = new JButton(localize("Open"));
         
         addEvent.addActionListener( new ActionListener() {
             
@@ -87,8 +88,8 @@ public class MainGUI extends JFrame {
         
         JTabbedPane eventsPane = new JTabbedPane();
         
-        eventsPane.add("Future events", futureEvents );
-        eventsPane.add("All events", allEvents );
+        eventsPane.add(localize("Future events"), futureEvents );
+        eventsPane.add(localize("All events"), allEvents );
         
         this.add( eventsPane );
         

@@ -1,4 +1,5 @@
 package fi.helsinki.cs.oato;
+import static fi.helsinki.cs.oato.Strings.*;
 
 import java.util.*;
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class OnlineCourseSource extends Observable {
                 try {
                     courseList = parse(fetch());
                     if (Main.DEBUG) {
-                        System.err.println("Got following courses:");
+                        System.err.println(localize("Got following courses:"));
                         for (Course c : courseList) {
                             System.err.println(c);
                         }
@@ -74,7 +75,7 @@ public class OnlineCourseSource extends Observable {
                     notifyObservers();
                     return;
                 } catch (Exception e) {
-                    System.err.println("While fetching online course data: " + e);
+                    System.err.println(localize("While fetching online course data: ") + e);
                     if (Main.DEBUG) {
                         e.printStackTrace();
                     }
@@ -82,7 +83,7 @@ public class OnlineCourseSource extends Observable {
                         this.sleep(errorSleep);
                     } catch (InterruptedException ie) { }
                     errorSleep *= 2;
-                    System.err.println("Retrying fetch");
+                    System.err.println(localize("Retrying fetch"));
                     continue;
                 }
             }
@@ -95,7 +96,7 @@ public class OnlineCourseSource extends Observable {
             if (entity != null) {
                 return EntityUtils.toString(entity);
             } else {
-                throw new IOException("Received nothing");
+                throw new IOException(localize("Received nothing"));
             }
         }
 

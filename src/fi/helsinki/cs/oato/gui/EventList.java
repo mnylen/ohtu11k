@@ -52,7 +52,7 @@ public class EventList extends JScrollPane {
 		item.setLayout( new FlowLayout() );
 		
 		// show actual event
-		JLabel text = new JLabel("TI 11.2. " + event.toString() );
+		JLabel text = new JLabel( event.toString() );
 		item.add( text );
 		
 		// button for editing this event
@@ -78,7 +78,11 @@ public class EventList extends JScrollPane {
 		item.setPreferredSize( new Dimension( content.getWidth() , 40 ) );
 		// add mouse over listener for this item
 		// hide / display delete / edit when mouse over
-		item.addMouseListener( new EventDisplayListener(delete, edit) );
+		EventDisplayListener listener = new EventDisplayListener(delete, edit);
+		item.addMouseListener( listener );
+		// XXX these needs to be added also to children events to make the experience corrext
+		delete.addMouseListener( listener );
+		edit.addMouseListener( listener );
 		
 		this.content.add( item );
 	}
@@ -123,8 +127,9 @@ public class EventList extends JScrollPane {
 
 		public void mouseExited(MouseEvent e) {
 			// XXX don't act when inside the component
-			// this.delete.setVisible(false);
-			// this.edit.setVisible(false);
+			// XXX currently fixed with a hack
+			this.delete.setVisible(false);
+			this.edit.setVisible(false);
 		}
 
 		public void mousePressed(MouseEvent e) {

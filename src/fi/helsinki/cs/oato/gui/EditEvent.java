@@ -246,6 +246,7 @@ public class EditEvent extends JFrame {
 
     public void selectCourse(Course c) {
         setRepeatModels(c.getStartDate(), c.getEndDate());
+        setSpinnerModels(c.getStartDate().plusHours(8), c.getStartDate().plusHours(10));
         description.setText( c.getDescription() );
         
         

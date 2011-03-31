@@ -3,6 +3,8 @@ package fi.helsinki.cs.oato;
 import java.util.*;
 import org.joda.time.DateTime;
 
+import static fi.helsinki.cs.oato.Helpers.*;
+
 /**
     A course with a start date, an end date and a description (name). Fetched from online by OnlineCourseSource.
 */
@@ -33,8 +35,7 @@ public class Course implements Comparable<Course>{
     }
 
     public String toString() {
-        return getDescription() + " " + OnlineCourseSource.formatter.print(startDate) + ".." +
-               OnlineCourseSource.formatter.print(endDate);
+        return getDescription() + " (" + toFinnishDate(startDate) + "–" + toFinnishDate(endDate) + ")";
     }
 
     public int compareTo(Course other) {

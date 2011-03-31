@@ -1,4 +1,5 @@
 package fi.helsinki.cs.oato;
+import static fi.helsinki.cs.oato.Helpers.*;
 
 import org.joda.time.DateTime;
 import java.util.Date;
@@ -157,7 +158,6 @@ public class Event implements Comparable<Event> {
     }
     
     public String toString() {
-    	// FIXME: deprecated?
-    	return getDescription() + " " + startDate.getHourOfDay() + ":" + startDate.getMinuteOfHour() + " [" + getLocation() + "]";
+    	return getDescription() + " " + toFinnishTime(startDate) + " [" + getLocation() + "]";
     }
 }

@@ -43,6 +43,7 @@
     <target name="compile" depends="mkdirs">
         <javac srcdir="${src.java.dir}" destdir="${build.dir}" debug="on">
             <compilerarg value="-Xlint:unchecked" />
+            <compilerarg value="-Xlint:deprecation" />
             <classpath>
                 <path refid="classpath" />
             </classpath>
@@ -61,6 +62,7 @@
     <target name="compile-test" depends="compile">
         <javac srcdir="${src.test.dir}" destdir="${build.test.dir}" debug="on">
             <compilerarg value="-Xlint:unchecked" />
+            <compilerarg value="-Xlint:deprecation" />
             <classpath>
                 <path refid="classpath" />
                 <path refid="test.classpath" />

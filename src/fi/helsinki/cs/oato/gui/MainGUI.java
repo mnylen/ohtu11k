@@ -34,7 +34,7 @@ public class MainGUI extends JFrame {
      *  @param height height of the screen
      **/
     public MainGUI(int width, int height) {
-        super();
+        super("OATO");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setSize(width, height);

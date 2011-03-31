@@ -13,7 +13,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.DateTime;
 
-public class OnlineCourseSource {
+public class OnlineCourseSource extends Observable {
     public static final String SOURCE_URL = "http://www.cs.helsinki.fi/u/tkairi/rajapinta/courses.json";
     public static final DateTimeFormatter formatter = DateTimeFormat.forPattern("YYYY-MM-dd");
 
@@ -23,7 +23,7 @@ public class OnlineCourseSource {
     /** Create a new OnlineCourseSource. Constructor will return immediately and start fetching the data in the background.
         You can check if the data is already available by calling isReady(), and get the data with getCourses() */
     OnlineCourseSource() {
-        (new FetcherThread()).run();
+        (new FetcherThread()).start();
     }
 
     public boolean isReady() {
@@ -54,13 +54,15 @@ public class OnlineCourseSource {
             while (true) {
                 try {
                     courseList = parse(fetch());
-                    ready = true;
                     if (Main.DEBUG) {
                         System.err.println("Got following courses:");
                         for (Course c : courseList) {
                             System.err.println(c);
                         }
                     }
+                    ready = true;
+                    setChanged();
+                    notifyObservers();
                     return;
                 } catch (Exception e) {
                     System.err.println("While fetching online course data: " + e);

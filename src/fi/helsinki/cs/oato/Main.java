@@ -7,13 +7,13 @@ public class Main {
     public static OnlineCourseSource onlineCourses;
     public static final boolean DEBUG = true;
 
-    private static JFrame mainGui;
+    private static JFrame mainGui = new MainGUI();
 
     public static void main(String args[]) {
         onlineCourses = new OnlineCourseSource();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Main.mainGui = new MainGUI();
+                Main.mainGui.setVisible(true);
             }
         });
     }

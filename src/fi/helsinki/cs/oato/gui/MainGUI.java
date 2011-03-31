@@ -31,6 +31,8 @@ public class MainGUI extends JFrame {
     /**
      * Creates new GUI. Size given.
      * 
+     * Note: the UI must be set visible in the main-method!
+     * 
      *  @param width width of the screen
      *  @param height height of the screen
      **/
@@ -40,7 +42,6 @@ public class MainGUI extends JFrame {
         this.pack();
         this.setSize(width, height);
         createUI();
-        this.setVisible(true);
     }
 
     /**

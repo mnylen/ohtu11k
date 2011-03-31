@@ -29,6 +29,8 @@ public class EditEvent extends JFrame {
     
     private static final long serialVersionUID = 1L;
 
+    private MainGUI parent;
+
     private JPanel border = new JPanel();
     private JPanel centerPanel;
     
@@ -54,7 +56,6 @@ public class EditEvent extends JFrame {
     
     private JPanel buttonPanel = new JPanel(new FlowLayout(RIGHT));
     private JButton addButton = new JButton(localize("Add event"));
-    private JButton okButton = new JButton(localize("OK"));
     private JButton cancelButton = new JButton(localize("Cancel"));
     
     // record if we are in mode that an event is created
@@ -64,16 +65,19 @@ public class EditEvent extends JFrame {
      * Creates new clean (empty) view for adding an event. 
      * 
      **/
-    public EditEvent() {
+    public EditEvent(MainGUI parent) {
         super(localize("Add event"));
+        this.parent = parent;
         DateTime now = (new DateTime()).withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0);
         initView(new Event(now, now.plusHours(2), "", ""));
     }
 
-    public EditEvent(Event e) {
+    public EditEvent(MainGUI parent, Event e) {
         super(localize("Edit event"));
+        this.parent = parent;
         createNew = false;
         initView(e);
+        addButton.setText("OK");
     }
 
     private void initView(Event e) {
@@ -130,11 +134,8 @@ public class EditEvent extends JFrame {
         setLeft(repeatEnd);
 
         border.add(buttonPanel, BorderLayout.SOUTH);
-        if (createNew) {
-            buttonPanel.add(addButton);
-        } else {
-            buttonPanel.add(okButton);
-        }
+        buttonPanel.add(addButton);
+        addButton.setEnabled(e.getDescription().trim().length() > 0);
         buttonPanel.add(cancelButton);
 
         description.setText( e.getDescription() );
@@ -149,16 +150,16 @@ public class EditEvent extends JFrame {
 
         addButton.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                okClicked();
+                if (description.getText().trim().length() > 0) {
+                    parent.addEvent(new Event(toJodaDate((Date) startTime.getValue()),
+                                            toJodaDate((Date) startTime.getValue()),
+                                            location.getText(),
+                                            description.getText()));
+        //             TODO: repeat handling
+                }
             }
         } );
 
-        okButton.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okClicked();
-            }
-        } );
-        
         importButton.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 importClicked();
@@ -175,6 +176,15 @@ public class EditEvent extends JFrame {
                 pack();
             }
         } );
+        description.addKeyListener( new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                boolean enabled = description.getText().trim().length() > 0;
+                if (enabled ^ addButton.isEnabled()) {
+                    addButton.setEnabled(enabled);
+                    EditEvent.this.pack();
+                }
+            }
+        });
 
         pack();
         setVisible(true);
@@ -233,10 +243,6 @@ public class EditEvent extends JFrame {
     
     private void setLeft(JComponent c) {
         c.setAlignmentX(Component.LEFT_ALIGNMENT);
-    }
-
-    protected void okClicked() {
-        
     }
 
     protected void importClicked() {

@@ -58,7 +58,7 @@ public class MainGUI extends JFrame {
             
             public void actionPerformed(ActionEvent e) {
                 // show add UI
-                new EditEvent();
+                new EditEvent( MainGUI.this );
             }
         } );
         

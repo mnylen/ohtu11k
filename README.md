@@ -28,7 +28,7 @@ At commandline, in project directory:
 3.  `git push`
 
 ## Testing
-<b>Do not commit code before running the tests!</b>
+It is good practice to always run the tests before commiting your code.
 
 ### Running
 `ant test`

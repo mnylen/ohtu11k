@@ -19,11 +19,12 @@ public class OnlineCourseSource extends Observable {
 
     private List<Course> courseList;
     private boolean ready = false;
+    private Thread fetcherThread = new FetcherThread();
 
     /** Create a new OnlineCourseSource. Constructor will return immediately and start fetching the data in the background.
         You can check if the data is already available by calling isReady(), and get the data with getCourses() */
     OnlineCourseSource() {
-        (new FetcherThread()).start();
+        fetcherThread.start();
     }
 
     public boolean isReady() {
@@ -37,6 +38,14 @@ public class OnlineCourseSource extends Observable {
         }
 
         return Collections.unmodifiableList(courseList);
+    }
+
+    public void blockUntilAvailable() {
+        while (!ready) {
+            try {
+                fetcherThread.join();
+            } catch(Exception e) {}
+        }
     }
 
     class FetcherThread extends Thread {

@@ -20,15 +20,8 @@ public class OnlineCourseSourceTest {
 
     @Test(timeout=15*1000)
     public void testOnlineFetchingSuccess() throws InterruptedException {
-        while (true) {
-            if (ocs.isReady()) {
-                break;
-            }
-            try {
-                this.wait(1000);
-            } catch (InterruptedException e) {
-                throw e;
-            }
+        while (!ocs.isReady()) {
+            ocs.blockUntilAvailable();
         }
 
         assertTrue(ocs.isReady());

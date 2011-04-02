@@ -2,6 +2,7 @@
 *.iml
 out
 class/*
+build/*
 *~
 *.bk
 *.orig

@@ -100,7 +100,7 @@ public class EventList extends JScrollPane {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			new EditEvent(this.event);
+			//new EditEvent(this.event);
 		}
 		
 	}

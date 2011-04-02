@@ -1,4 +1,4 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.io;
 
 import com.csvreader.CsvReader;
 

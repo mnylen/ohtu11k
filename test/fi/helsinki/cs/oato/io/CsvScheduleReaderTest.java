@@ -1,5 +1,8 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.io;
 
+import fi.helsinki.cs.oato.io.CsvScheduleReader;
+import fi.helsinki.cs.oato.io.CsvScheduleWriter;
+import fi.helsinki.cs.oato.io.ScheduleWriter;
 import fi.helsinki.cs.oato.model.Event;
 import fi.helsinki.cs.oato.model.EventFixtures;
 import fi.helsinki.cs.oato.model.Schedule;

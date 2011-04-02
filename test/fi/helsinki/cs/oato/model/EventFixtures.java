@@ -1,7 +1,7 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.model;
 
+import fi.helsinki.cs.oato.model.Event;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
 
 public abstract class EventFixtures {
     public static final long ONE_HOUR  = 3600000;

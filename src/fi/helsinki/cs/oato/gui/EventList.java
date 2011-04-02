@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import fi.helsinki.cs.oato.Event;
 import static fi.helsinki.cs.oato.Strings.*;
 
 
@@ -46,7 +45,7 @@ public class EventList extends JScrollPane {
 	 * 
 	 * @param event The event to be added.
 	 **/
-	public void addEvent(Event event) {
+	public void addEvent(fi.helsinki.cs.oato.model.Event event) {
 		// create a new panel for showing this item
 		JPanel item = new JPanel();
 		item.setLayout( new FlowLayout() );
@@ -93,9 +92,9 @@ public class EventList extends JScrollPane {
 	 **/
 	private class EventActionListener implements ActionListener {
 
-		private Event event;
+		private fi.helsinki.cs.oato.model.Event event;
 		
-		public EventActionListener(Event event) {
+		public EventActionListener(fi.helsinki.cs.oato.model.Event event) {
 			this.event = event;
 		}
 		

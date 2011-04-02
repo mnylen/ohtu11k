@@ -1,5 +1,8 @@
 package fi.helsinki.cs.oato;
 
+import fi.helsinki.cs.oato.model.Event;
+import fi.helsinki.cs.oato.model.EventFixtures;
+import fi.helsinki.cs.oato.model.Schedule;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -2,11 +2,10 @@ package fi.helsinki.cs.oato.gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.EventListener;
 
 import javax.swing.*;
 
-import fi.helsinki.cs.oato.Event;
+import fi.helsinki.cs.oato.model.Event;
 import static fi.helsinki.cs.oato.Strings.*;
 
 /**

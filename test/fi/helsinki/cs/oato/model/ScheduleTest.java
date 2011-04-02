@@ -1,7 +1,8 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.model;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+
 import org.junit.Test;
 import org.junit.Before;
 

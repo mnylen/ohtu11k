@@ -1,13 +1,14 @@
 package fi.helsinki.cs.oato;
 
 import java.util.*;
+
+import fi.helsinki.cs.oato.model.Course;
 import org.junit.Before;
 import org.junit.Test;
 
 import static fi.helsinki.cs.oato.OnlineCourseSourceFixtures.*;
 import static org.junit.Assert.*;
 import static org.junit.Assume.*;
-import static org.hamcrest.CoreMatchers.*;
 import static org.junit.matchers.JUnitMatchers.*;
 
 public class OnlineCourseSourceTest {

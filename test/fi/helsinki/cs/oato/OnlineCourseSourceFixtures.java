@@ -1,6 +1,8 @@
 package fi.helsinki.cs.oato;
 
 import java.util.*;
+
+import fi.helsinki.cs.oato.model.Course;
 import org.json.simple.JSONValue;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

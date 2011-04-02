@@ -5,6 +5,9 @@ import com.csvreader.CsvWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+
+import fi.helsinki.cs.oato.model.Event;
+import fi.helsinki.cs.oato.model.Schedule;
 import org.joda.time.format.ISODateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 

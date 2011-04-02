@@ -1,5 +1,7 @@
 package fi.helsinki.cs.oato;
 
+import fi.helsinki.cs.oato.model.Schedule;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;

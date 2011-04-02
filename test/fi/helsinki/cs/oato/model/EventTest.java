@@ -1,9 +1,9 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.model;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+
 import org.junit.Test;
-import java.util.GregorianCalendar;
 
 public class EventTest {
     @Test

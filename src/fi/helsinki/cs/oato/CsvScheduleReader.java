@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
+
+import fi.helsinki.cs.oato.model.Event;
+import fi.helsinki.cs.oato.model.Schedule;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 

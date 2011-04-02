@@ -3,6 +3,8 @@ import static fi.helsinki.cs.oato.Strings.*;
 
 import java.util.*;
 import java.io.IOException;
+
+import fi.helsinki.cs.oato.model.*;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -12,7 +14,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONValue;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.DateTime;
 
 public class OnlineCourseSource extends Observable {
     public static final String SOURCE_URL = "http://www.cs.helsinki.fi/u/tkairi/rajapinta/courses.json";

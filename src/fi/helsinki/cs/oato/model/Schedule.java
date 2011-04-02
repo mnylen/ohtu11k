@@ -1,4 +1,4 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.model;
 
 import java.util.*;
 

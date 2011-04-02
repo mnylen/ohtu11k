@@ -62,7 +62,7 @@ public class Strings {
     public static String localize(String original) {
         if (!l.containsKey(original)) {
             if (Main.DEBUG) {
-                System.err.println(localize("\"" + original + "\" " + localize("has no translation")));
+                System.err.println(original + " has no translation");
                 return original;
             }
         }

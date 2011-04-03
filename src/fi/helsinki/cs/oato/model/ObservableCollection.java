@@ -57,6 +57,7 @@ public class ObservableCollection<T> implements Collection<T> {
         return returnValue;
     }
 
+    @SuppressWarnings("unchecked")
     public boolean remove(Object o) {
         boolean returnValue = this.innerCollection.remove(o);
 

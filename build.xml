@@ -24,6 +24,7 @@
 
     <path id="test.classpath">
         <pathelement path="${lib.dir}/junit-4.8.2.jar" />
+        <pathelement path="${lib.dir}/mockito-all-1.8.5.jar" />
     </path>
 
     <target name="clean">

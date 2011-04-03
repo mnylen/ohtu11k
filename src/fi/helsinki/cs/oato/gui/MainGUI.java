@@ -13,7 +13,7 @@ import static fi.helsinki.cs.oato.Strings.*;
  * Create main UI for the application. 
  * 
  **/
-public class MainGUI extends JFrame {
+public class MainGUI extends JFrame implements EventContainer {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,8 +47,7 @@ public class MainGUI extends JFrame {
     /**
      * Actually creates the UI 
      **/
-    private void createUI() {
-    	
+    private void createUI() {        
     	// UI buttons
         JButton addEvent = new JButton(localize("Add event"));
         JButton saveData = new JButton(localize("Save"));
@@ -58,7 +57,7 @@ public class MainGUI extends JFrame {
             
             public void actionPerformed(ActionEvent e) {
                 // show add UI
-                new EditEvent( MainGUI.this );
+                new EditEvent(MainGUI.this);
             }
         } );
         

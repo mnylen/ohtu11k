@@ -29,7 +29,7 @@ public class EditEvent extends JFrame {
     
     private static final long serialVersionUID = 1L;
 
-    private MainGUI parent;
+    private EventContainer parent;
 
     private JPanel border = new JPanel();
     private JPanel centerPanel;
@@ -65,14 +65,14 @@ public class EditEvent extends JFrame {
      * Creates new clean (empty) view for adding an event. 
      * 
      **/
-    public EditEvent(MainGUI parent) {
+    public EditEvent(EventContainer parent) {
         super(localize("Add event"));
         this.parent = parent;
         DateTime now = (new DateTime()).withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0);
         initView(new Event(now, now.plusHours(2), "", ""));
     }
 
-    public EditEvent(MainGUI parent, Event e) {
+    public EditEvent(EventContainer parent, Event e) {
         super(localize("Edit event"));
         this.parent = parent;
         createNew = false;

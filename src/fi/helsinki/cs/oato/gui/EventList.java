@@ -11,7 +11,7 @@ import static fi.helsinki.cs.oato.Strings.*;
 /**
  * UI component for showing Events in a list. 
  **/
-public class EventList extends JScrollPane {
+public class EventList extends JScrollPane implements EventContainer {
 	
 	/**
 	 * Serial version UID.
@@ -96,7 +96,7 @@ public class EventList extends JScrollPane {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			new EditEvent(this.event);
+			new EditEvent(EventList.this, this.event);
 		}
 		
 	}

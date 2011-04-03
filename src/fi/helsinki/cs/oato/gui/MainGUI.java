@@ -128,9 +128,24 @@ public class MainGUI extends JFrame {
         updateSchedule( this.schedule );
     }
     
-    private void updateSchedule(Schedule s) {
+    /**
+     * Update the schedule viewed.
+     * 
+     * @param s the new schedule
+     *
+     */
+    void updateSchedule(Schedule s) {
     	this.futureEvents.addEvents( s.nextEvents() );
     	this.allEvents.addEvents( s.allEvents() );
+    }
+    
+    /**
+     * Returns the schedule of this view.
+     * 
+     * @return schedule.
+     */
+    Schedule getSchedule() {
+    	return this.schedule;
     }
     
     /**

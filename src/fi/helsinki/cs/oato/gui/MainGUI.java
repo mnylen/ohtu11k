@@ -49,6 +49,7 @@ public class MainGUI extends JFrame {
         this.setSize(width, height);
         createUI();
         loadFile();
+        updateSchedule( this.schedule );
     }
 
     private void loadFile() {
@@ -61,8 +62,6 @@ public class MainGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Could not load events");
             schedule = new Schedule();
         }
-
-        
     }
 
     /**

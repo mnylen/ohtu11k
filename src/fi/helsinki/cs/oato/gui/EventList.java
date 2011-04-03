@@ -63,7 +63,7 @@ public class EventList extends JScrollPane {
 		
 		// button for deleting this event
 		JButton delete = new JButton(localize("Delete"));
-		delete.setSize(100, 50);
+		// delete.setSize(100, 50);
 		delete.setVisible(false);
 		delete.addActionListener( new ActionListener() {
 			
@@ -75,7 +75,7 @@ public class EventList extends JScrollPane {
 		} );
 		item.add( delete );
 		
-		item.setPreferredSize( new Dimension( content.getWidth() , 40 ) );
+		item.setPreferredSize( new Dimension( (int) content.getPreferredSize().getWidth() , 40 ) );
 		// add mouse over listener for this item
 		// hide / display delete / edit when mouse over
 		EventDisplayListener listener = new EventDisplayListener(delete, edit);

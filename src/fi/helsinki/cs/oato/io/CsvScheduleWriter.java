@@ -35,7 +35,7 @@ public class CsvScheduleWriter extends ScheduleWriter {
         CsvWriter writer = new CsvWriter(this.out, SEPARATOR, CHARSET);
         writeHeaderRecord(writer);
 
-        for (Event event : schedule.allEvents()) {
+        for (Event event : schedule.getEvents()) {
             writeEventRecord(writer, event);
         }
 

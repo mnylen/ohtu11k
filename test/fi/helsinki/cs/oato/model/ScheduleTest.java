@@ -69,4 +69,18 @@ public class ScheduleTest {
 	    assertThat( schedule.getEvents().size() , is(1) );
 	    assertThat( schedule.getEvents().contains( this.dentistAppointment ), is(true) );
     }
+    
+    @Test
+    public void testRemoving() {
+	    Schedule schedule = new Schedule();
+	    
+	    schedule.addEvent( this.dentistAppointment );
+	    assertThat( schedule.getEvents().size() , is(1) );
+	    assertThat( schedule.getEvents().contains( this.dentistAppointment ), is(true) );
+	    
+	    schedule.removeEvent( this.dentistAppointment );
+		assertThat( schedule.getEvents().size() , is(0) );
+	    assertThat( schedule.getEvents().contains( this.dentistAppointment ), is(false) );
+	    
+    }
 }

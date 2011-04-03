@@ -71,4 +71,13 @@ public class Schedule {
     public boolean addEvent(Event event) {
     	return this.events.add(event);
     }
+    
+    /**
+     * Removes an event from Schedule.
+     * 
+     * @param event Event to be removed.
+     */
+    public boolean removeEvent(Event event) {
+    	return this.events.remove(event);
+    }
 }

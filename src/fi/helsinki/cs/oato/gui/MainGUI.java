@@ -119,6 +119,11 @@ public class MainGUI extends JFrame {
         
     }
     
+    private void updateSchedule(Schedule s) {
+    	this.futureEvents.addEvents( s.nextEvents() );
+    	this.allEvents.addEvents( s.events() );
+    }
+    
     /**
      * @deprecated Used for debug only
      * **/

@@ -46,4 +46,16 @@ public class Schedule {
     public Iterator<Event> nextEvents() {
         return new EventIterator(this.allEvents(), true);
     }
+    
+    /**
+     * Gets an iterator over all scheduled events.
+     * <p>
+     * The iterator returns all  events in the order by starting
+     * date and time.
+     *
+     * @return <code>Iterator</code> over upcoming events
+     */
+    public Iterator<Event> events() {
+        return new EventIterator(this.allEvents(), false);
+    }
 }

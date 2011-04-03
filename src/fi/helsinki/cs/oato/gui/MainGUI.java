@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import javax.swing.*;
 
-import com.sun.tools.javac.main.JavacOption;
 import fi.helsinki.cs.oato.io.CsvScheduleReader;
 import fi.helsinki.cs.oato.model.Event;
 import fi.helsinki.cs.oato.model.Schedule;
@@ -63,11 +62,7 @@ public class MainGUI extends JFrame {
             schedule = new Schedule();
         }
 
-        for (Iterator<Event> it = this.schedule.nextEvents(); it.hasNext();) {
-            Event event = it.next();
-            System.out.println(event.toString());
-            addEvent(event);
-        }
+        
     }
 
     /**
@@ -123,8 +118,10 @@ public class MainGUI extends JFrame {
         this.setLayout( new FlowLayout() );
         
     }
-
-    // should take event
+    
+    /**
+     * @deprecated Used for debug only
+     * **/
     public void addEvent(Event event) {
         futureEvents.addEvent(event);
     }

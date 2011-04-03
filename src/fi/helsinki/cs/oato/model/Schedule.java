@@ -6,6 +6,8 @@ import java.util.*;
  * Container for events.
  */
 public class Schedule {
+	
+	// XXX should we allow same object to be in the list several times? that's the case atm.
     private Collection<Event> events;
 
     /**
@@ -64,7 +66,7 @@ public class Schedule {
      * 
      * @param event Event to be added.
      * 
-     * @return <code>true</code> when adding has been succesfull and <code>false</code> when adding has failed.
+     * @return <code>true</code> when adding has been successful and <code>false</code> when adding has failed.
      */
     public boolean addEvent(Event event) {
     	return this.events.add(event);

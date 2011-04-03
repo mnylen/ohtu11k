@@ -56,4 +56,17 @@ public class ScheduleTest {
         assertThat(nextEvents, instanceOf(EventIterator.class));
         assertThat(((EventIterator)nextEvents).isPastDiscarded(), is(true));
     }
+    
+    @Test
+    public void testAddingAdds() {
+	    Schedule schedule = new Schedule();
+	    
+	    assertThat( schedule.getEvents().size() , is(0) );
+	    assertThat( schedule.getEvents().contains( this.dentistAppointment ), is(false) );
+	    
+	    boolean retVal = schedule.addEvent( this.dentistAppointment );
+	    assertThat( retVal , is(true) );
+	    assertThat( schedule.getEvents().size() , is(1) );
+	    assertThat( schedule.getEvents().contains( this.dentistAppointment ), is(true) );
+    }
 }

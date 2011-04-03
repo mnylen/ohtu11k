@@ -66,9 +66,7 @@ public class EventList extends JScrollPane {
 		JButton edit = new JButton(localize("Edit"));
 		item.add( edit );
 		edit.setVisible(false);
-		edit.addActionListener( new EventActionListener(event) {
-			
-		} );
+		edit.addActionListener( new EventActionListener(event) );
 		
 		// button for deleting this event
 		JButton delete = new JButton(localize("Delete"));
@@ -121,7 +119,8 @@ public class EventList extends JScrollPane {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			//new EditEvent(this.event);
+			System.out.println("jeee");
+			new EditEvent( EventList.this.parent, this.event);
 		}
 		
 	}

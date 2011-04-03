@@ -46,10 +46,10 @@ public class CsvScheduleReaderTest {
     @Test
     public void testRead() throws Exception {
         Schedule readSchedule = this.reader.read();
-        assertThat(readSchedule.allEvents().size(), is(schedule.allEvents().size()));
+        assertThat(readSchedule.getEvents().size(), is(schedule.getEvents().size()));
 
-        assertThat(readSchedule.allEvents().contains(this.dentistAppointment), is(true));
-        assertThat(readSchedule.allEvents().contains(this.softwareEngineeringLecture), is(true));
+        assertThat(readSchedule.getEvents().contains(this.dentistAppointment), is(true));
+        assertThat(readSchedule.getEvents().contains(this.softwareEngineeringLecture), is(true));
     }
 
     @Test(expected=IllegalArgumentException.class)

@@ -31,7 +31,7 @@ public class Schedule {
      * 
      * @return readonly collection of all scheduled events
      */
-    public Collection<Event> allEvents() {
+    public Collection<Event> getEvents() {
         return Collections.unmodifiableCollection(events);
     }
 
@@ -44,7 +44,7 @@ public class Schedule {
      * @return <code>Iterator</code> over upcoming events
      */
     public Iterator<Event> nextEvents() {
-        return new EventIterator(this.allEvents(), true);
+        return new EventIterator(this.getEvents(), true);
     }
     
     /**
@@ -55,7 +55,7 @@ public class Schedule {
      *
      * @return <code>Iterator</code> over upcoming events
      */
-    public Iterator<Event> events() {
-        return new EventIterator(this.allEvents(), false);
+    public Iterator<Event> allEvents() {
+        return new EventIterator(this.getEvents(), false);
     }
 }

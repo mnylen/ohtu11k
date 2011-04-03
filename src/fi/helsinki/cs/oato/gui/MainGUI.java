@@ -120,7 +120,7 @@ public class MainGUI extends JFrame {
     
     private void updateSchedule(Schedule s) {
     	this.futureEvents.addEvents( s.nextEvents() );
-    	this.allEvents.addEvents( s.events() );
+    	this.allEvents.addEvents( s.allEvents() );
     }
     
     /**

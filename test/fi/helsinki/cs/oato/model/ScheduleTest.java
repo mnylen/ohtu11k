@@ -27,7 +27,7 @@ public class ScheduleTest {
         events.add(this.softwareEngineeringLecture);
 
         Schedule schedule = new Schedule(events);
-        Collection<Event> actualEvents = schedule.allEvents();
+        Collection<Event> actualEvents = schedule.getEvents();
 
         assertThat(actualEvents.contains(this.dentistAppointment), is(true));
         assertThat(actualEvents.contains(this.softwareEngineeringLecture), is(true));
@@ -37,7 +37,7 @@ public class ScheduleTest {
     @Test
     public void testAllEventsIsUnmodifiable() {
         Schedule schedule = new Schedule();
-        Collection<Event> allEvents = schedule.allEvents();
+        Collection<Event> allEvents = schedule.getEvents();
 
         try {
             allEvents.add(this.dentistAppointment);

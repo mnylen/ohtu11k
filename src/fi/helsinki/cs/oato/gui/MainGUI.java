@@ -2,6 +2,7 @@ package fi.helsinki.cs.oato.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Iterator;
 
@@ -48,20 +49,7 @@ public class MainGUI extends JFrame {
         this.pack();
         this.setSize(width, height);
         createUI();
-        loadFile();
-        updateSchedule( this.schedule );
-    }
-
-    private void loadFile() {
-        try {
-            FileInputStream fis = new FileInputStream("events.csv");
-            schedule = new CsvScheduleReader(fis).read();
-        } catch (Exception e) {
-            e.printStackTrace();
-            
-            JOptionPane.showMessageDialog(this, "Could not load events");
-            schedule = new Schedule();
-        }
+        loadFile( new File( "events.csv" ) );
     }
 
     /**
@@ -116,6 +104,25 @@ public class MainGUI extends JFrame {
         
         this.setLayout( new FlowLayout() );
         
+    }
+    
+    /***
+     * Loads File f and updates the Schedule to be f
+     * 
+     * @param f the file to be loaded.
+     * 
+     * */
+    private void loadFile(File f) {
+        try {
+            FileInputStream fis = new FileInputStream(f);
+            schedule = new CsvScheduleReader(fis).read();
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+            JOptionPane.showMessageDialog(this, "Could not load events");
+            schedule = new Schedule();
+        }
+        updateSchedule( this.schedule );
     }
     
     private void updateSchedule(Schedule s) {

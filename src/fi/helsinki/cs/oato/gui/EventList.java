@@ -26,6 +26,7 @@ public class EventList extends JScrollPane {
 	 * Creates new empty list of events.
 	 **/
 	public EventList() {
+        this.content.setVisible(true);
 		this.setViewportView( content );
 	}
 	

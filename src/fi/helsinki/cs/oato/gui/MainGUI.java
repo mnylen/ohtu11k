@@ -2,10 +2,17 @@ package fi.helsinki.cs.oato.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.util.Iterator;
 
 import javax.swing.*;
 
+import com.sun.tools.javac.main.JavacOption;
+import fi.helsinki.cs.oato.io.CsvScheduleReader;
 import fi.helsinki.cs.oato.model.Event;
+import fi.helsinki.cs.oato.model.Schedule;
+import org.joda.time.DateTime;
+
 import static fi.helsinki.cs.oato.Strings.*;
 
 /**
@@ -18,6 +25,7 @@ public class MainGUI extends JFrame {
 
     private EventList futureEvents = new EventList();
     private EventList allEvents = new EventList();
+    private Schedule schedule;
 
     /**
      * Create new GUI. Defaults to 500 x 500.
@@ -41,6 +49,25 @@ public class MainGUI extends JFrame {
         this.pack();
         this.setSize(width, height);
         createUI();
+        loadFile();
+    }
+
+    private void loadFile() {
+        try {
+            FileInputStream fis = new FileInputStream("events.csv");
+            schedule = new CsvScheduleReader(fis).read();
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+            JOptionPane.showMessageDialog(this, "Could not load events");
+            schedule = new Schedule();
+        }
+
+        for (Iterator<Event> it = this.schedule.nextEvents(); it.hasNext();) {
+            Event event = it.next();
+            System.out.println(event.toString());
+            addEvent(event);
+        }
     }
 
     /**
@@ -83,7 +110,7 @@ public class MainGUI extends JFrame {
         this.add( openData );
         
         Dimension eventDataSize = new Dimension( this.getWidth() - 50 , 350 );
-        futureEvents.setPreferredSize( eventDataSize );
+        futureEvents.setPreferredSize(eventDataSize);
         allEvents.setPreferredSize(eventDataSize);
         
         JTabbedPane eventsPane = new JTabbedPane();

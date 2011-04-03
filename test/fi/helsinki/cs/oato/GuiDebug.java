@@ -2,8 +2,8 @@ package fi.helsinki.cs.oato;
 
 import javax.swing.SwingUtilities;
 
-import fi.helsinki.cs.oato.Main;
 import fi.helsinki.cs.oato.gui.MainGUI;
+import fi.helsinki.cs.oato.model.EventFixtures;
 
 public class GuiDebug {
 

@@ -1,6 +1,8 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.model;
 
 import java.util.*;
+
+import fi.helsinki.cs.oato.model.Course;
 import org.joda.time.DateTime;
 
 public class CourseTestFixtures {

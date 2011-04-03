@@ -1,4 +1,4 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.model;
 
 import java.util.*;
 
@@ -6,6 +6,8 @@ import java.util.*;
  * Container for events.
  */
 public class Schedule {
+	
+	// XXX should we allow same object to be in the list several times? that's the case atm.
     private Collection<Event> events;
 
     /**
@@ -31,7 +33,7 @@ public class Schedule {
      * 
      * @return readonly collection of all scheduled events
      */
-    public Collection<Event> allEvents() {
+    public Collection<Event> getEvents() {
         return Collections.unmodifiableCollection(events);
     }
 
@@ -44,6 +46,38 @@ public class Schedule {
      * @return <code>Iterator</code> over upcoming events
      */
     public Iterator<Event> nextEvents() {
-        return new EventIterator(this.allEvents(), true);
+        return new EventIterator(this.getEvents(), true);
+    }
+    
+    /**
+     * Gets an iterator over all scheduled events.
+     * <p>
+     * The iterator returns all  events in the order by starting
+     * date and time.
+     *
+     * @return <code>Iterator</code> over upcoming events
+     */
+    public Iterator<Event> allEvents() {
+        return new EventIterator(this.getEvents(), false);
+    }
+    
+    /**
+     * Adds event to the Schedule.
+     * 
+     * @param event Event to be added.
+     * 
+     * @return <code>true</code> when adding has been successful and <code>false</code> when adding has failed.
+     */
+    public boolean addEvent(Event event) {
+    	return this.events.add(event);
+    }
+    
+    /**
+     * Removes an event from Schedule.
+     * 
+     * @param event Event to be removed.
+     */
+    public boolean removeEvent(Event event) {
+    	return this.events.remove(event);
     }
 }

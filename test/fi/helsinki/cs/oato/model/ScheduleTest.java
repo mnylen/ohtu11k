@@ -1,7 +1,8 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.model;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+
 import org.junit.Test;
 import org.junit.Before;
 
@@ -26,7 +27,7 @@ public class ScheduleTest {
         events.add(this.softwareEngineeringLecture);
 
         Schedule schedule = new Schedule(events);
-        Collection<Event> actualEvents = schedule.allEvents();
+        Collection<Event> actualEvents = schedule.getEvents();
 
         assertThat(actualEvents.contains(this.dentistAppointment), is(true));
         assertThat(actualEvents.contains(this.softwareEngineeringLecture), is(true));
@@ -36,7 +37,7 @@ public class ScheduleTest {
     @Test
     public void testAllEventsIsUnmodifiable() {
         Schedule schedule = new Schedule();
-        Collection<Event> allEvents = schedule.allEvents();
+        Collection<Event> allEvents = schedule.getEvents();
 
         try {
             allEvents.add(this.dentistAppointment);
@@ -54,5 +55,32 @@ public class ScheduleTest {
         assertThat(nextEvents, not(nullValue()));
         assertThat(nextEvents, instanceOf(EventIterator.class));
         assertThat(((EventIterator)nextEvents).isPastDiscarded(), is(true));
+    }
+    
+    @Test
+    public void testAddingAdds() {
+	    Schedule schedule = new Schedule();
+	    
+	    assertThat( schedule.getEvents().size() , is(0) );
+	    assertThat( schedule.getEvents().contains( this.dentistAppointment ), is(false) );
+	    
+	    boolean retVal = schedule.addEvent( this.dentistAppointment );
+	    assertThat( retVal , is(true) );
+	    assertThat( schedule.getEvents().size() , is(1) );
+	    assertThat( schedule.getEvents().contains( this.dentistAppointment ), is(true) );
+    }
+    
+    @Test
+    public void testRemoving() {
+	    Schedule schedule = new Schedule();
+	    
+	    schedule.addEvent( this.dentistAppointment );
+	    assertThat( schedule.getEvents().size() , is(1) );
+	    assertThat( schedule.getEvents().contains( this.dentistAppointment ), is(true) );
+	    
+	    schedule.removeEvent( this.dentistAppointment );
+		assertThat( schedule.getEvents().size() , is(0) );
+	    assertThat( schedule.getEvents().contains( this.dentistAppointment ), is(false) );
+	    
     }
 }

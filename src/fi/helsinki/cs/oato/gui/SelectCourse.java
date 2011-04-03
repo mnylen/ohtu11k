@@ -3,15 +3,14 @@ package fi.helsinki.cs.oato.gui;
 import java.awt.*;
 import static java.awt.FlowLayout.*;
 import java.awt.event.*;
-import org.joda.time.DateTime;
 
 import java.util.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
 import fi.helsinki.cs.oato.*;
-import fi.helsinki.cs.oato.Event;
-import static fi.helsinki.cs.oato.Helpers.*;
+import fi.helsinki.cs.oato.model.Course;
+
 import static fi.helsinki.cs.oato.Strings.*;
 
 

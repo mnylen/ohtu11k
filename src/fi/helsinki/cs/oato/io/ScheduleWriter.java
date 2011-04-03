@@ -1,7 +1,8 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.io;
+
+import fi.helsinki.cs.oato.model.Schedule;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 public abstract class ScheduleWriter {
 

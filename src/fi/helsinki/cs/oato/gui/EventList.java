@@ -2,16 +2,19 @@ package fi.helsinki.cs.oato.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Iterator;
+
 import javax.swing.*;
 
-import fi.helsinki.cs.oato.Event;
+import fi.helsinki.cs.oato.model.*;
+
 import static fi.helsinki.cs.oato.Strings.*;
 
 
 /**
  * UI component for showing Events in a list. 
  **/
-public class EventList extends JScrollPane implements EventContainer {
+public class EventList extends JScrollPane {
 	
 	/**
 	 * Serial version UID.
@@ -23,10 +26,14 @@ public class EventList extends JScrollPane implements EventContainer {
 	 **/
 	private JPanel content = new JPanel();
 	
+	private MainGUI parent;
+	
 	/**
 	 * Creates new empty list of events.
 	 **/
-	public EventList() {
+	public EventList(MainGUI parent) {
+		this.parent = parent;
+        this.content.setVisible(true);
 		this.setViewportView( content );
 	}
 	
@@ -46,41 +53,52 @@ public class EventList extends JScrollPane implements EventContainer {
 	 * 
 	 * @param event The event to be added.
 	 **/
-	public void addEvent(Event event) {
+	public void addEvent(fi.helsinki.cs.oato.model.Event event) {
 		// create a new panel for showing this item
 		JPanel item = new JPanel();
 		item.setLayout( new FlowLayout() );
 		
 		// show actual event
-		JLabel text = new JLabel("TI 11.2. " + event.toString() );
+		JLabel text = new JLabel( event.toString() );
 		item.add( text );
 		
 		// button for editing this event
 		JButton edit = new JButton(localize("Edit"));
 		item.add( edit );
 		edit.setVisible(false);
-		edit.addActionListener( new EventActionListener(event) );
 		
 		// button for deleting this event
 		JButton delete = new JButton(localize("Delete"));
-		delete.setSize(100, 50);
+		// delete.setSize(100, 50);
 		delete.setVisible(false);
-		delete.addActionListener( new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				// TODO: a mockup solution
-				JButton b = (JButton)(e.getSource());
-				b.getParent().setVisible(false);
-			}
-		} );
+		
+		ActionListener eventListener = new EventActionListener(event, edit, delete);
+		edit.addActionListener( eventListener );
+		delete.addActionListener( eventListener );
 		item.add( delete );
 		
-		item.setPreferredSize( new Dimension( content.getWidth() , 40 ) );
+		item.setPreferredSize( new Dimension( (int) content.getPreferredSize().getWidth() , 40 ) );
 		// add mouse over listener for this item
 		// hide / display delete / edit when mouse over
-		item.addMouseListener( new EventDisplayListener(delete, edit) );
+		EventDisplayListener listener = new EventDisplayListener(delete, edit);
+		item.addMouseListener( listener );
+		// XXX these needs to be added also to children events to make the experience corrext
+		delete.addMouseListener( listener );
+		edit.addMouseListener( listener );
 		
 		this.content.add( item );
+	}
+	
+	/**
+	 * Adds all the events in the iterator.
+	 * 
+	 * @param events list of events to be added.
+	 * */
+	public void addEvents(Iterator<fi.helsinki.cs.oato.model.Event> events) {
+		this.content.removeAll();
+		while( events.hasNext() ) {
+			this.addEvent( events.next() );
+		}
 	}
 	
 	/**
@@ -89,14 +107,25 @@ public class EventList extends JScrollPane implements EventContainer {
 	 **/
 	private class EventActionListener implements ActionListener {
 
-		private Event event;
+		private fi.helsinki.cs.oato.model.Event event;
+		private JComponent edit;
+		private JComponent delete;
 		
-		public EventActionListener(Event event) {
+		public EventActionListener(fi.helsinki.cs.oato.model.Event event, JComponent edit, JComponent delete) {
 			this.event = event;
+			this.edit = edit;
+			this.delete = delete;
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			new EditEvent(EventList.this, this.event);
+			if( e.getSource() == this.edit ) {
+                new EditEvent(EventList.this.parent, this.event);
+			}
+			if( e.getSource() == this.delete ) {
+				Schedule schedule = EventList.this.parent.getSchedule();
+				schedule.removeEvent(this.event);
+				EventList.this.parent.updateSchedule(schedule);
+			}
 		}
 		
 	}
@@ -123,8 +152,9 @@ public class EventList extends JScrollPane implements EventContainer {
 
 		public void mouseExited(MouseEvent e) {
 			// XXX don't act when inside the component
-			// this.delete.setVisible(false);
-			// this.edit.setVisible(false);
+			// XXX currently fixed with a hack
+			this.delete.setVisible(false);
+			this.edit.setVisible(false);
 		}
 
 		public void mousePressed(MouseEvent e) {

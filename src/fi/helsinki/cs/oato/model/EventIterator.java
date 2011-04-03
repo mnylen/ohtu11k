@@ -1,6 +1,8 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.model;
 
 import java.util.*;
+
+import fi.helsinki.cs.oato.model.Event;
 import org.joda.time.DateTime;
 import static fi.helsinki.cs.oato.Strings.*;
 

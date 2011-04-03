@@ -1,6 +1,5 @@
-package fi.helsinki.cs.oato;
+package fi.helsinki.cs.oato.model;
 
-import java.util.*;
 import org.joda.time.DateTime;
 
 import static fi.helsinki.cs.oato.Helpers.*;
@@ -16,7 +15,7 @@ public class Course implements Comparable<Course>{
     /**
         Create from already parsed data.
     */
-    Course(String description, DateTime startDate, DateTime endDate) {
+    public Course(String description, DateTime startDate, DateTime endDate) {
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;

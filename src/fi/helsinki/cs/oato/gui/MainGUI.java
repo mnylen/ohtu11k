@@ -2,23 +2,32 @@ package fi.helsinki.cs.oato.gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.EventListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Iterator;
 
 import javax.swing.*;
 
-import fi.helsinki.cs.oato.Event;
+import fi.helsinki.cs.oato.io.CsvScheduleReader;
+import fi.helsinki.cs.oato.io.CsvScheduleWriter;
+import fi.helsinki.cs.oato.model.Event;
+import fi.helsinki.cs.oato.model.Schedule;
+import org.joda.time.DateTime;
+
 import static fi.helsinki.cs.oato.Strings.*;
 
 /**
  * Create main UI for the application. 
  * 
  **/
-public class MainGUI extends JFrame implements EventContainer {
+public class MainGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    private EventList futureEvents = new EventList();
-    private EventList allEvents = new EventList();
+    private EventList futureEvents = new EventList(this);
+    private EventList allEvents = new EventList(this);
+    private Schedule schedule;
 
     /**
      * Create new GUI. Defaults to 500 x 500.
@@ -42,6 +51,7 @@ public class MainGUI extends JFrame implements EventContainer {
         this.pack();
         this.setSize(width, height);
         createUI();
+        loadFile( new File( "events.csv" ) );
     }
 
     /**
@@ -65,7 +75,10 @@ public class MainGUI extends JFrame implements EventContainer {
             
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser();
-                chooser.showSaveDialog( MainGUI.this );
+                int selection = chooser.showSaveDialog( MainGUI.this );
+                if( selection == JFileChooser.APPROVE_OPTION ) {
+                	MainGUI.this.saveFile( chooser.getSelectedFile() );
+                }
             }
         } );
         
@@ -73,7 +86,10 @@ public class MainGUI extends JFrame implements EventContainer {
             
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser();
-                chooser.showOpenDialog( MainGUI.this );
+                int selection = chooser.showOpenDialog( MainGUI.this );
+                if( selection == JFileChooser.APPROVE_OPTION ) {
+                	MainGUI.this.loadFile( chooser.getSelectedFile() );
+                }
             }
         });
         
@@ -83,7 +99,7 @@ public class MainGUI extends JFrame implements EventContainer {
         this.add( openData );
         
         Dimension eventDataSize = new Dimension( this.getWidth() - 50 , 350 );
-        futureEvents.setPreferredSize( eventDataSize );
+        futureEvents.setPreferredSize(eventDataSize);
         allEvents.setPreferredSize(eventDataSize);
         
         JTabbedPane eventsPane = new JTabbedPane();
@@ -96,8 +112,61 @@ public class MainGUI extends JFrame implements EventContainer {
         this.setLayout( new FlowLayout() );
         
     }
-
-    // should take event
+    
+    /***
+     * Loads File f and updates the Schedule to be f
+     * 
+     * @param f the file to be loaded.
+     * 
+     * */
+    private void loadFile(File f) {
+        try {
+            FileInputStream fis = new FileInputStream(f);
+            schedule = new CsvScheduleReader(fis).read();
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+            JOptionPane.showMessageDialog(this, "Could not load events");
+            schedule = new Schedule();
+        }
+        updateSchedule( this.schedule );
+    }
+    
+    private void saveFile(File f) {
+    	try {
+            FileOutputStream fos = new FileOutputStream(f);
+            CsvScheduleWriter writer = new CsvScheduleWriter(fos);
+            writer.write( this.schedule );
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+            JOptionPane.showMessageDialog(this, "Could not load events");
+        }
+    }
+    
+    /**
+     * Update the schedule viewed.
+     * 
+     * @param s the new schedule
+     *
+     */
+    void updateSchedule(Schedule s) {
+    	this.futureEvents.addEvents( s.nextEvents() );
+    	this.allEvents.addEvents( s.allEvents() );
+    }
+    
+    /**
+     * Returns the schedule of this view.
+     * 
+     * @return schedule.
+     */
+    Schedule getSchedule() {
+    	return this.schedule;
+    }
+    
+    /**
+     * @deprecated Used for debug only
+     * **/
     public void addEvent(Event event) {
         futureEvents.addEvent(event);
     }

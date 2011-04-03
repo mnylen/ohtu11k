@@ -26,10 +26,13 @@ public class EventList extends JScrollPane {
 	 **/
 	private JPanel content = new JPanel();
 	
+	private MainGUI parent;
+	
 	/**
 	 * Creates new empty list of events.
 	 **/
-	public EventList() {
+	public EventList(MainGUI parent) {
+		this.parent = parent;
         this.content.setVisible(true);
 		this.setViewportView( content );
 	}
@@ -63,7 +66,9 @@ public class EventList extends JScrollPane {
 		JButton edit = new JButton(localize("Edit"));
 		item.add( edit );
 		edit.setVisible(false);
-		edit.addActionListener( new EventActionListener(event) );
+		edit.addActionListener( new EventActionListener(event) {
+			
+		} );
 		
 		// button for deleting this event
 		JButton delete = new JButton(localize("Delete"));

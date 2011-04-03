@@ -23,8 +23,8 @@ public class MainGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    private EventList futureEvents = new EventList();
-    private EventList allEvents = new EventList();
+    private EventList futureEvents = new EventList(this);
+    private EventList allEvents = new EventList(this);
     private Schedule schedule;
 
     /**

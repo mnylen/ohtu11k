@@ -81,11 +81,7 @@ public class EditEvent extends JFrame {
         addButton.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (description.getText().trim().length() > 0) {
-                	Event event = EditEvent.this.event;
-                	event.setDescription( description.getText() );
-                	event.setStartDate( toJodaDate((Date) startTime.getValue() ) );
-                	event.setEndDate( toJodaDate((Date) startTime.getValue() ) );
-                    event.setLocation( location.getText() );
+                	updateEvent();
                     Schedule s = EditEvent.this.parent.getSchedule();
                     s.addEvent( event );
                     EditEvent.this.parent.updateSchedule(s);
@@ -106,17 +102,20 @@ public class EditEvent extends JFrame {
         addButton.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (description.getText().trim().length() > 0) {
-                	Event event = EditEvent.this.event;
-                	event.setDescription( description.getText() );
-                	event.setStartDate( toJodaDate((Date) startTime.getValue() ) );
-                	event.setEndDate( toJodaDate((Date) startTime.getValue() ) );
-                    event.setLocation( location.getText() );
+                    updateEvent();
                     Schedule s = EditEvent.this.parent.getSchedule();
                     EditEvent.this.parent.updateSchedule(s);
                     EditEvent.this.dispose();
                 }
             }
         } );
+    }
+
+    private void updateEvent() {
+        event.setDescription( description.getText() );
+        event.setStartDate( toJodaDate((Date) startTime.getValue() ) );
+        event.setEndDate( toJodaDate((Date) startTime.getValue() ) );
+        event.setLocation( location.getText() );
     }
 
     private void initView(Event e) {

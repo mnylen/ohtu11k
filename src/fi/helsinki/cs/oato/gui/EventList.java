@@ -2,7 +2,11 @@ package fi.helsinki.cs.oato.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Iterator;
+
 import javax.swing.*;
+
+import fi.helsinki.cs.oato.model.Event;
 
 import static fi.helsinki.cs.oato.Strings.*;
 
@@ -85,6 +89,17 @@ public class EventList extends JScrollPane {
 		edit.addMouseListener( listener );
 		
 		this.content.add( item );
+	}
+	
+	/**
+	 * Adds all the events in the iterator.
+	 * 
+	 * @param events list of events to be added.
+	 * */
+	public void addEvents(Iterator<Event> events) {
+		while( events.hasNext() ) {
+			this.addEvent( events.next() );
+		}
 	}
 	
 	/**

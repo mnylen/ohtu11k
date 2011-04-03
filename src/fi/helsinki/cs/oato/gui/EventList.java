@@ -97,6 +97,7 @@ public class EventList extends JScrollPane {
 	 * @param events list of events to be added.
 	 * */
 	public void addEvents(Iterator<Event> events) {
+		this.content.removeAll();
 		while( events.hasNext() ) {
 			this.addEvent( events.next() );
 		}

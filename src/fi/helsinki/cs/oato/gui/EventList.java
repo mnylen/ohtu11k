@@ -7,6 +7,7 @@ import java.util.Iterator;
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.model.Event;
+import fi.helsinki.cs.oato.model.Schedule;
 
 import static fi.helsinki.cs.oato.Strings.*;
 
@@ -66,20 +67,15 @@ public class EventList extends JScrollPane {
 		JButton edit = new JButton(localize("Edit"));
 		item.add( edit );
 		edit.setVisible(false);
-		edit.addActionListener( new EventActionListener(event) );
 		
 		// button for deleting this event
 		JButton delete = new JButton(localize("Delete"));
 		// delete.setSize(100, 50);
 		delete.setVisible(false);
-		delete.addActionListener( new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				// TODO: a mockup solution
-				JButton b = (JButton)(e.getSource());
-				b.getParent().setVisible(false);
-			}
-		} );
+		
+		ActionListener eventListener = new EventActionListener(event, edit, delete);
+		edit.addActionListener( eventListener );
+		delete.addActionListener( eventListener );
 		item.add( delete );
 		
 		item.setPreferredSize( new Dimension( (int) content.getPreferredSize().getWidth() , 40 ) );
@@ -113,14 +109,24 @@ public class EventList extends JScrollPane {
 	private class EventActionListener implements ActionListener {
 
 		private fi.helsinki.cs.oato.model.Event event;
+		private JComponent edit;
+		private JComponent delete;
 		
-		public EventActionListener(fi.helsinki.cs.oato.model.Event event) {
+		public EventActionListener(fi.helsinki.cs.oato.model.Event event, JComponent edit, JComponent delete) {
 			this.event = event;
+			this.edit = edit;
+			this.delete = delete;
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("jeee");
-			new EditEvent( EventList.this.parent, this.event);
+			if( e.getSource() == this.edit ) {
+				new EditEvent( EventList.this.parent, this.event);
+			}
+			if( e.getSource() == this.delete ) {
+				Schedule schedule = EventList.this.parent.getSchedule();
+				schedule.removeEvent(this.event);
+				EventList.this.parent.updateSchedule(schedule);
+			}
 		}
 		
 	}

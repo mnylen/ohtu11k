@@ -58,4 +58,15 @@ public class Schedule {
     public Iterator<Event> allEvents() {
         return new EventIterator(this.getEvents(), false);
     }
+    
+    /**
+     * Adds event to the Schedule.
+     * 
+     * @param event Event to be added.
+     * 
+     * @return <code>true</code> when adding has been succesfull and <code>false</code> when adding has failed.
+     */
+    public boolean addEvent(Event event) {
+    	return this.events.add(event);
+    }
 }

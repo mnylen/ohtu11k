@@ -4,11 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Iterator;
 
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.io.CsvScheduleReader;
+import fi.helsinki.cs.oato.io.CsvScheduleWriter;
 import fi.helsinki.cs.oato.model.Event;
 import fi.helsinki.cs.oato.model.Schedule;
 import org.joda.time.DateTime;
@@ -74,7 +76,10 @@ public class MainGUI extends JFrame {
             
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser();
-                chooser.showSaveDialog( MainGUI.this );
+                int selection = chooser.showSaveDialog( MainGUI.this );
+                if( selection == JFileChooser.APPROVE_OPTION ) {
+                	MainGUI.this.saveFile( chooser.getSelectedFile() );
+                }
             }
         } );
         
@@ -126,6 +131,18 @@ public class MainGUI extends JFrame {
             schedule = new Schedule();
         }
         updateSchedule( this.schedule );
+    }
+    
+    private void saveFile(File f) {
+    	try {
+            FileOutputStream fos = new FileOutputStream(f);
+            CsvScheduleWriter writer = new CsvScheduleWriter(fos);
+            writer.write( this.schedule );
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+            JOptionPane.showMessageDialog(this, "Could not load events");
+        }
     }
     
     /**

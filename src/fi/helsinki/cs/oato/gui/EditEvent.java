@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import fi.helsinki.cs.oato.model.Course;
+import fi.helsinki.cs.oato.model.Schedule;
+
 import org.joda.time.DateTime;
 
 import java.util.*;
@@ -62,6 +64,8 @@ public class EditEvent extends JFrame {
     
     // record if we are in mode that an event is created
     private boolean createNew = true;
+    
+    private Event event = null;
 
     /**
      * Creates new clean (empty) view for adding an event. 
@@ -72,6 +76,24 @@ public class EditEvent extends JFrame {
         this.parent = parent;
         DateTime now = (new DateTime()).withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0);
         initView(new Event(now, now.plusHours(2), "", ""));
+        
+        // when no previous event has been given, add event to Schedule
+        addButton.addActionListener( new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (description.getText().trim().length() > 0) {
+                	Event event = EditEvent.this.event;
+                	event.setDescription( description.getText() );
+                	event.setStartDate( toJodaDate((Date) startTime.getValue() ) );
+                	event.setEndDate( toJodaDate((Date) startTime.getValue() ) );
+                    event.setLocation( location.getText() );
+                    Schedule s = EditEvent.this.parent.getSchedule();
+                    s.addEvent( event );
+                    EditEvent.this.parent.updateSchedule(s);
+                    EditEvent.this.dispose();
+                }
+            }
+        } );
+
     }
 
     public EditEvent(MainGUI parent, Event e) {
@@ -80,9 +102,27 @@ public class EditEvent extends JFrame {
         createNew = false;
         initView(e);
         addButton.setText("OK");
+        
+        addButton.addActionListener( new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (description.getText().trim().length() > 0) {
+                	Event event = EditEvent.this.event;
+                	event.setDescription( description.getText() );
+                	event.setStartDate( toJodaDate((Date) startTime.getValue() ) );
+                	event.setEndDate( toJodaDate((Date) startTime.getValue() ) );
+                    event.setLocation( location.getText() );
+                    Schedule s = EditEvent.this.parent.getSchedule();
+                    EditEvent.this.parent.updateSchedule(s);
+                    EditEvent.this.dispose();
+                }
+            }
+        } );
     }
 
     private void initView(Event e) {
+    	
+    	this.event = e;
+    	
         setResizable(false);
         border.setLayout(new BorderLayout());
         border.setBorder(new EmptyBorder(PADDING_Y, PADDING_X, PADDING_Y, PADDING_X));
@@ -147,18 +187,6 @@ public class EditEvent extends JFrame {
 
             public void actionPerformed(ActionEvent e) {
                 dispose();
-            }
-        } );
-
-        addButton.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (description.getText().trim().length() > 0) {
-                    parent.addEvent(new Event(toJodaDate((Date) startTime.getValue()),
-                                            toJodaDate((Date) startTime.getValue()),
-                                            location.getText(),
-                                            description.getText()));
-        //             TODO: repeat handling
-                }
             }
         } );
 

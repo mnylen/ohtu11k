@@ -82,7 +82,10 @@ public class MainGUI extends JFrame {
             
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser();
-                chooser.showOpenDialog( MainGUI.this );
+                int selection = chooser.showOpenDialog( MainGUI.this );
+                if( selection == JFileChooser.APPROVE_OPTION ) {
+                	MainGUI.this.loadFile( chooser.getSelectedFile() );
+                }
             }
         });
         

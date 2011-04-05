@@ -97,6 +97,7 @@ public class EventList extends JScrollPane {
 		edit.addMouseListener( listener );
 
         this.content.add( item );
+        this.validate();
 	}
 
 	/**
@@ -109,6 +110,7 @@ public class EventList extends JScrollPane {
 		while( events.hasNext() ) {
 			this.addEvent( events.next() );
 		}
+		this.validate();
 	}
 	
 	/**

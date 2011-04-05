@@ -123,7 +123,7 @@ public class Event implements Comparable<Event> {
         if (this.equals(another)) {
             return 0;
         } else {
-            return this.getStartDate().compareTo(another.getStartDate());
+            return this.compareTo(another.getStartDate());
         }
     }
     

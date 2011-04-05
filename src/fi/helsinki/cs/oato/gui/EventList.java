@@ -17,7 +17,7 @@ import static fi.helsinki.cs.oato.Strings.*;
  **/
 public class EventList extends JScrollPane {
 
-    public static final int HOVER_HGAP = 5;
+    public static final int HOVER_HGAP = 10;
     public static final int HOVER_VGAP = 0;
     public static final int ITEM_HEIGHT = 50;
     
@@ -64,7 +64,6 @@ public class EventList extends JScrollPane {
 		// create a new panel for showing this item
 		JPanel item = new JPanel();
         FlowLayout layout = new FlowLayout(FlowLayout.CENTER, HOVER_HGAP, HOVER_VGAP);
-        layout.setAlignOnBaseline(false);
 		item.setLayout( layout );
 		
 		// show actual event
@@ -86,9 +85,6 @@ public class EventList extends JScrollPane {
 		delete.addActionListener( eventListener );
 		item.add( delete );
 
-        item.setPreferredSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
-        item.setMaximumSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
-
 		// add mouse over listener for this item
 		// hide / display delete / edit when mouse over
 		EventDisplayListener listener = new EventDisplayListener(delete, edit, text, event);
@@ -97,7 +93,15 @@ public class EventList extends JScrollPane {
 		delete.addMouseListener( listener );
 		edit.addMouseListener( listener );
 
-        this.content.add( item );
+        item.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+
+        JPanel centerer = new JPanel(new GridBagLayout());
+        centerer.add( item );
+        centerer.setPreferredSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
+        centerer.setMaximumSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
+        item.setPreferredSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
+        
+        this.content.add( centerer );
         this.validate();
 	}
 

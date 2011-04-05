@@ -235,7 +235,7 @@ public class EditEvent extends JFrame {
 
         border.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(addButton);
-        addButton.setEnabled(e.getDescription().trim().length() > 0);
+        addButton.setEnabled(event.validate() == null);
         buttonPanel.add(cancelButton);
 
         description.setText( e.getDescription() );

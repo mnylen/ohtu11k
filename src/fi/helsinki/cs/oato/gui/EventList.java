@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.Iterator;
 
 import javax.swing.*;
+import javax.swing.border.*;
 
 import fi.helsinki.cs.oato.model.*;
 import fi.helsinki.cs.oato.model.Event;
@@ -19,7 +20,9 @@ public class EventList extends JScrollPane {
 
     public static final int HOVER_HGAP = 10;
     public static final int HOVER_VGAP = 0;
-    public static final int ITEM_HEIGHT = 50;
+    public static final int ITEM_HEIGHT = 60;
+    public static final int TEXT_TOP_PADDING = 20;
+    public static final int TEXT_TOP_PADDING_HOVER = 5;
     public static final int SCROLLBAR_UNIT = ITEM_HEIGHT / 3;
     
 	/**
@@ -31,8 +34,10 @@ public class EventList extends JScrollPane {
 	 * Actual container for the data.
 	 **/
 	private JPanel content;
-	
 	private MainGUI parent;
+    private Border textPadding = BorderFactory.createEmptyBorder(TEXT_TOP_PADDING, 0, 0, 0);
+    private Border textHoverPadding = BorderFactory.createEmptyBorder(TEXT_TOP_PADDING_HOVER, 0, 0, 0);
+    private Border itemBorder = BorderFactory.createEtchedBorder();
 	
 	/**
 	 * Creates new empty list of events.
@@ -75,6 +80,7 @@ public class EventList extends JScrollPane {
 		
 		// show actual event
 		JLabel text = new JLabel( event.toUIString() );
+        text.setBorder(this.textPadding);
 		item.add( text );
 		
 		// button for editing this event
@@ -102,6 +108,8 @@ public class EventList extends JScrollPane {
 
         item.setMaximumSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
         item.setPreferredSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
+
+        item.setBorder(this.itemBorder);
         
         this.content.add( item );
 	}
@@ -171,6 +179,7 @@ public class EventList extends JScrollPane {
 			this.delete.setVisible(true);
 			this.edit.setVisible(true);
             this.text.setText(event.toExtendedString());
+            text.setBorder(EventList.this.textHoverPadding);
 		}
 
 		public void mouseExited(MouseEvent e) {
@@ -179,6 +188,7 @@ public class EventList extends JScrollPane {
 			this.delete.setVisible(false);
 			this.edit.setVisible(false);
             this.text.setText(event.toUIString());
+            text.setBorder(EventList.this.textPadding);
 		}
 
 		public void mousePressed(MouseEvent e) {

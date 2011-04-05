@@ -191,10 +191,10 @@ public class Event implements Comparable<Event> {
         }
 
         if (getLocation().equals("")) {
-            return String.format("%s %s %s", getDescription(), date, toFinnishTime(getStartDate()));
+            return String.format("%s %s %s", date, toFinnishTime(getStartDate()), getDescription());
         }
 
-        return String.format("%s %s %s [%s]", getDescription(), date, toFinnishTime(getStartDate()), getLocation());
+        return String.format("%s %s %s [%s]", date, toFinnishTime(getStartDate()), getDescription(),  getLocation());
     }
 
     /**

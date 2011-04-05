@@ -75,13 +75,22 @@ class EventIterator implements Iterator<Event> {
     private void rewindToFirstUpcomingEvent() {
         DateTime now = new DateTime();
         Event event = null;
-
+        
         while (this.innerIterator.hasNext()) {
-            event = this.innerIterator.next();
-
+        	event = this.innerIterator.next();
+        	
             if (event.compareTo(now) >= 0) {
                 break;
             }
+            
+            
+        }
+        
+        // XXX hack
+        // sometimes the latest event is not actually before the given date, 
+        // but just happens to be the last element in the list => iterator can't go further
+        if( event.compareTo(now) < 0 ) {
+        	event = null;
         }
 
         if (event != null) {

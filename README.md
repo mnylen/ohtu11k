@@ -10,8 +10,8 @@
 2.  `git clone https://github.com/mnylen/ohtu11k.git`
 
 ## Compiling
-At commandline, in project directory:
-`ant`
+At commandline, in project directory:<br />
+`ant compile`
 
 ## Running
 `ant run`

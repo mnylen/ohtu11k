@@ -40,6 +40,7 @@ public class EventList extends JScrollPane {
 		this.parent = parent;
         this.content.setLayout( new BoxLayout(this.content, BoxLayout.Y_AXIS) );
         setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        getVerticalScrollBar().setUnitIncrement(ITEM_HEIGHT);
         setViewportView(this.content);
         this.content.setVisible(true);
 	}
@@ -93,16 +94,10 @@ public class EventList extends JScrollPane {
 		delete.addMouseListener( listener );
 		edit.addMouseListener( listener );
 
-        item.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-
-        JPanel centerer = new JPanel(new GridBagLayout());
-        centerer.add( item );
-        centerer.setPreferredSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
-        centerer.setMaximumSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
         item.setPreferredSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
+        item.setMaximumSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
         
-        this.content.add( centerer );
-        this.validate();
+        this.content.add( item );
 	}
 
 	/**

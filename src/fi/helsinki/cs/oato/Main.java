@@ -18,14 +18,14 @@ public class Main {
         System.setProperty("swing.aatext", "true");
 
         /* Set bearable look&feel */
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-        } catch (Exception e) {
-            try {
-                MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme());
-                UIManager.setLookAndFeel(new MetalLookAndFeel());
-            } catch (Exception e2) {}
-        };
+//         try {
+//             UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+//         } catch (Exception e) {
+//             try {
+//                 MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme());
+//                 UIManager.setLookAndFeel(new MetalLookAndFeel());
+//             } catch (Exception e2) {}
+//         };
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

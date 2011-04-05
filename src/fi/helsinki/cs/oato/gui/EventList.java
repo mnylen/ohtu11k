@@ -29,7 +29,7 @@ public class EventList extends JScrollPane {
 	/**
 	 * Actual container for the data.
 	 **/
-	private JPanel content = new JPanel();
+	private JPanel content;
 	
 	private MainGUI parent;
 	
@@ -38,8 +38,10 @@ public class EventList extends JScrollPane {
 	 **/
 	public EventList(MainGUI parent) {
 		this.parent = parent;
+		this.content = new JPanel();
         this.content.setVisible(true);
 		this.setViewportView( content );
+		this.content.setLayout( new BoxLayout( this.content , BoxLayout.Y_AXIS ) );
 	}
 	
 	/**
@@ -48,7 +50,7 @@ public class EventList extends JScrollPane {
 	 * @param preferredSize Preferred size of UI component.
 	 **/
 	public void setPreferredSize(Dimension preferredSize) {
-		this.content.setPreferredSize( preferredSize );
+		super.setPreferredSize( preferredSize );
 	}
 
 	/**
@@ -84,7 +86,7 @@ public class EventList extends JScrollPane {
 		delete.addActionListener( eventListener );
 		item.add( delete );
 
-        item.setPreferredSize( new Dimension( (int) content.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
+        item.setPreferredSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
 
 		// add mouse over listener for this item
 		// hide / display delete / edit when mouse over

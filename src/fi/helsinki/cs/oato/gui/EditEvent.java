@@ -10,10 +10,12 @@ import fi.helsinki.cs.oato.model.Course;
 import fi.helsinki.cs.oato.model.Schedule;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import java.util.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.event.*;
 
 import fi.helsinki.cs.oato.*;
 import fi.helsinki.cs.oato.model.Event;
@@ -80,13 +82,24 @@ public class EditEvent extends JFrame {
         // when no previous event has been given, add event to Schedule
         addButton.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (description.getText().trim().length() > 0) {
-                	updateEvent();
-                    Schedule s = EditEvent.this.parent.getSchedule();
-                    s.addEvent( event );
-                    EditEvent.this.parent.updateSchedule(s);
-                    EditEvent.this.dispose();
+                updateEvent();
+                String validation = event.validate();
+                if (validation != null) {
+                    updateOkButton();
+                    JOptionPane.showMessageDialog(EditEvent.this, validation, localize("Error"), JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+                
+                Schedule s = EditEvent.this.parent.getSchedule();
+                if (repeat.isSelected()) {
+                    if (! repeatEvent(s)) {
+                        return;
+                    }
+                } else {
+                    s.addEvent( event );
+                }
+                EditEvent.this.parent.updateSchedule(s);
+                EditEvent.this.dispose();
             }
         } );
 
@@ -97,25 +110,68 @@ public class EditEvent extends JFrame {
         this.parent = parent;
         createNew = false;
         initView(e);
-        addButton.setText("OK");
+        addButton.setText(localize("OK"));
         
         addButton.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (description.getText().trim().length() > 0) {
-                    updateEvent();
-                    Schedule s = EditEvent.this.parent.getSchedule();
-                    EditEvent.this.parent.updateSchedule(s);
-                    EditEvent.this.dispose();
+                updateEvent();
+                String validation = event.validate();
+                if (validation != null) {
+                    updateOkButton();
+                    JOptionPane.showMessageDialog(EditEvent.this, validation, localize("Error"), JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+                
+                Schedule s = EditEvent.this.parent.getSchedule();
+                EditEvent.this.parent.updateSchedule(s);
+                EditEvent.this.dispose();
             }
         } );
     }
 
     private void updateEvent() {
+        event.setStartDate( toJodaDate((Date) startTime.getValue()) );
+        event.setEndDate( toJodaDate((Date) endTime.getValue()) );
         event.setDescription( description.getText() );
-        event.setStartDate( toJodaDate((Date) startTime.getValue() ) );
-        event.setEndDate( toJodaDate((Date) startTime.getValue() ) );
         event.setLocation( location.getText() );
+    }
+
+    private boolean repeatEvent(Schedule s) {
+        DateTime start = toJodaDate((Date) repeatStart.getValue());
+        DateTime end = toJodaDate((Date) repeatEnd.getValue());
+        Interval interval;
+
+        try {
+            interval = new Interval(start, end.plusDays(1).minus(1));
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, localize("Invalid repeat interval"),
+                                          localize("Error"), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (! interval.contains(event.getStartDate())) {
+            JOptionPane.showMessageDialog(this, localize("Repeat interval does not contain event start"),
+                                          localize("Error"), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        /* Repeat to future */
+        for (int i=0; interval.contains(event.getStartDate().plusWeeks(i)); i++) {
+            s.addEvent( new Event(event.getStartDate().plusWeeks(i),
+                                  event.getEndDate().plusWeeks(i),
+                                  event.getDescription(),
+                                  event.getLocation()) );
+        }
+        
+        /* Repeat to past */
+        for (int i=1; interval.contains(event.getStartDate().minusWeeks(i)); i++) {
+            s.addEvent( new Event(event.getStartDate().minusWeeks(i),
+                                  event.getEndDate().minusWeeks(i),
+                                  event.getDescription(),
+                                  event.getLocation()) );
+        }
+
+        return true;
     }
 
     private void initView(Event e) {
@@ -157,22 +213,25 @@ public class EditEvent extends JFrame {
         setLeft(endTime);
         centerPanel.add(endTime);
 
-        setLeft(repeat);
         repeat.setSelected(false);
-        centerPanel.add(repeat);
 
-        repeatPanel = new JPanel();
-        repeatPanel.setLayout(new BoxLayout(repeatPanel, BoxLayout.PAGE_AXIS));
-        setLeft(repeatPanel);
+        if (createNew) {
+            setLeft(repeat);
+            centerPanel.add(repeat);
 
-        DateTime now = (new DateTime()).withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0).withHourOfDay(0);
-        setRepeatModels(now, now.plusDays(14));
-        repeatPanel.add(repeatLabel);
-        repeatPanel.add(repeatStart);
-        repeatPanel.add(repeatEnd);
-        setLeft(repeatLabel);
-        setLeft(repeatStart);
-        setLeft(repeatEnd);
+            repeatPanel = new JPanel();
+            repeatPanel.setLayout(new BoxLayout(repeatPanel, BoxLayout.PAGE_AXIS));
+            setLeft(repeatPanel);
+
+            DateTime now = (new DateTime()).withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0).withHourOfDay(0);
+            setRepeatModels(now, now.plusDays(14));
+            repeatPanel.add(repeatLabel);
+            repeatPanel.add(repeatStart);
+            repeatPanel.add(repeatEnd);
+            setLeft(repeatLabel);
+            setLeft(repeatStart);
+            setLeft(repeatEnd);
+        }
 
         border.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(addButton);
@@ -207,13 +266,17 @@ public class EditEvent extends JFrame {
         } );
         description.addKeyListener( new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                boolean enabled = description.getText().trim().length() > 0;
-                if (enabled ^ addButton.isEnabled()) {
-                    addButton.setEnabled(enabled);
-                    EditEvent.this.pack();
-                }
+                updateOkButton();
             }
         });
+
+        ChangeListener timeListener = new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                updateOkButton();
+            }
+        };
+        startTime.addChangeListener(timeListener);
+        endTime.addChangeListener(timeListener);
 
         pack();
         setVisible(true);
@@ -280,6 +343,15 @@ public class EditEvent extends JFrame {
         }
     }
 
+    private void updateOkButton() {
+        updateEvent();
+        boolean valid = (event.validate() == null);
+        if (valid ^ addButton.isEnabled()) {
+            addButton.setEnabled(valid);
+            EditEvent.this.pack();
+        }
+    }
+
     public void selectCourse(Course c) {
         setRepeatModels(c.getStartDate(), c.getEndDate());
         setSpinnerModels(c.getStartDate().plusHours(8), c.getStartDate().plusHours(10));
@@ -289,5 +361,7 @@ public class EditEvent extends JFrame {
         if (!repeat.isSelected()) {
             repeat.doClick();
         }
+
+        updateOkButton();
     }
 }

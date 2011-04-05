@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.util.Iterator;
 
 import javax.swing.*;
+import javax.swing.border.*;
 
 import fi.helsinki.cs.oato.io.CsvScheduleReader;
 import fi.helsinki.cs.oato.io.CsvScheduleWriter;
@@ -28,6 +29,9 @@ public class MainGUI extends JFrame {
     private EventList futureEvents = new EventList(this);
     private EventList allEvents = new EventList(this);
     private Schedule schedule;
+    
+    public static final int PADDING_X = 5;
+    public static final int PADDING_Y = 2;
 
     /**
      * Create new GUI. Defaults to 500 x 500.
@@ -48,17 +52,25 @@ public class MainGUI extends JFrame {
     public MainGUI(int width, int height) {
         super("OATO");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pack();
         this.setSize(width, height);
         createUI();
         loadFile( new File( "events.csv" ) );
+        this.pack();
     }
 
     /**
      * Actually creates the UI 
      **/
-    private void createUI() {        
-    	// UI buttons
+    private void createUI() {
+        JPanel border = new JPanel();
+        border.setLayout(new BorderLayout());
+        border.setBorder(new EmptyBorder(PADDING_Y, PADDING_X, PADDING_Y, PADDING_X));
+        add(border);
+        BorderLayout layout = new BorderLayout();
+        border.setLayout(layout);
+        
+        // UI buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton addEvent = new JButton(localize("Add event"));
         JButton saveData = new JButton(localize("Save"));
         JButton openData = new JButton(localize("Open"));
@@ -94,9 +106,10 @@ public class MainGUI extends JFrame {
         });
         
         // display buttons
-        this.add( addEvent );
-        this.add( saveData );
-        this.add( openData );
+        buttonPanel.add( addEvent );
+        buttonPanel.add( saveData );
+        buttonPanel.add( openData );
+        border.add(buttonPanel, BorderLayout.NORTH);
         
         Dimension eventDataSize = new Dimension( this.getWidth() - 50 , 350 );
         futureEvents.setPreferredSize(eventDataSize);
@@ -107,9 +120,7 @@ public class MainGUI extends JFrame {
         eventsPane.add(localize("Future events"), futureEvents );
         eventsPane.add(localize("All events"), allEvents );
         
-        this.add( eventsPane );
-        
-        this.setLayout( new FlowLayout() );
+        border.add( eventsPane, BorderLayout.CENTER );
         
     }
     

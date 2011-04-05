@@ -1,7 +1,8 @@
 package fi.helsinki.cs.oato.model;
 import static fi.helsinki.cs.oato.Helpers.*;
+import static fi.helsinki.cs.oato.Strings.*;
 
-import org.joda.time.DateTime;
+import org.joda.time.*;
 import java.util.Date;
 
 /**
@@ -158,6 +159,59 @@ public class Event implements Comparable<Event> {
     }
     
     public String toString() {
-    	return getDescription() + " " + toFinnishTime(startDate) + " [" + getLocation() + "]";
+        return String.format("%s %s %s [%s]", getDescription(), toFinnishDate(getStartDate()),
+                                              toFinnishTime(getStartDate()), getLocation());
+    }
+
+    public String toExtendedString() {
+        if (getLocation().equals("")) {
+            return String.format("%s %s–%s", getDescription(), toFinnishTime(getStartDate()), toFinnishTime(getEndDate()));
+        }
+
+        return String.format("%s %s–%s [%s]", getDescription(), toFinnishTime(getStartDate()),
+                                              toFinnishTime(getEndDate()), getLocation());
+    }
+
+    public String toUIString() {
+        String date;
+
+        LocalDate now = new LocalDate();
+        DateTime starts = getStartDate();
+
+        if (now.equals(starts.toLocalDate())) {
+            date = localize("today");
+        } else if (now.equals(starts.toLocalDate().minusDays(1))) {
+            date = localize("tomorrow");
+        } else if ((new DateTime()).isBefore(starts) &&
+                   now.getWeekOfWeekyear() == starts.getWeekOfWeekyear() &&
+                   now.getWeekyear() == starts.getWeekyear()) {
+            date = weekdayOn(starts.getDayOfWeek());
+        } else {
+            date = toFinnishDate(starts);
+        }
+
+        if (getLocation().equals("")) {
+            return String.format("%s %s %s", getDescription(), date, toFinnishTime(getStartDate()));
+        }
+
+        return String.format("%s %s %s [%s]", getDescription(), date, toFinnishTime(getStartDate()), getLocation());
+    }
+
+    /**
+     * Validates the event in the spirit of Model-View-Controller. Returns <code>null</code> on success, otherwise an
+     * error message (<code>String</code>) containing the validation error.
+     *
+     * @return Valiation error, or <code>null</code> if <code>Event</code> is valid.
+     */
+    public String validate() {
+        if (getDescription().trim().length() == 0) {
+            return localize("Empty description");
+        }
+        
+        if (getEndDate().isBefore(getStartDate())) {
+            return localize("Event end can not be before start");
+        }
+
+        return null;
     }
 }

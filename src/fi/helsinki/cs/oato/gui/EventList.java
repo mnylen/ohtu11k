@@ -7,6 +7,7 @@ import java.util.Iterator;
 import javax.swing.*;
 
 import fi.helsinki.cs.oato.model.*;
+import fi.helsinki.cs.oato.model.Event;
 
 import static fi.helsinki.cs.oato.Strings.*;
 
@@ -15,7 +16,11 @@ import static fi.helsinki.cs.oato.Strings.*;
  * UI component for showing Events in a list. 
  **/
 public class EventList extends JScrollPane {
-	
+
+    public static final int HOVER_HGAP = 5;
+    public static final int HOVER_VGAP = 0;
+    public static final int ITEM_HEIGHT = 50;
+    
 	/**
 	 * Serial version UID.
 	 */
@@ -45,7 +50,7 @@ public class EventList extends JScrollPane {
 	public void setPreferredSize(Dimension preferredSize) {
 		this.content.setPreferredSize( preferredSize );
 	}
-	
+
 	/**
 	 * Adds new event to this UI view. 
 	 * 
@@ -53,13 +58,15 @@ public class EventList extends JScrollPane {
 	 * 
 	 * @param event The event to be added.
 	 **/
-	public void addEvent(fi.helsinki.cs.oato.model.Event event) {
+	public void addEvent(Event event) {
 		// create a new panel for showing this item
 		JPanel item = new JPanel();
-		item.setLayout( new FlowLayout() );
+        FlowLayout layout = new FlowLayout(FlowLayout.CENTER, HOVER_HGAP, HOVER_VGAP);
+        layout.setAlignOnBaseline(false);
+		item.setLayout( layout );
 		
 		// show actual event
-		JLabel text = new JLabel( event.toString() );
+		JLabel text = new JLabel( event.toUIString() );
 		item.add( text );
 		
 		// button for editing this event
@@ -76,25 +83,26 @@ public class EventList extends JScrollPane {
 		edit.addActionListener( eventListener );
 		delete.addActionListener( eventListener );
 		item.add( delete );
-		
-		item.setPreferredSize( new Dimension( (int) content.getPreferredSize().getWidth() , 40 ) );
+
+        item.setPreferredSize( new Dimension( (int) content.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
+
 		// add mouse over listener for this item
 		// hide / display delete / edit when mouse over
-		EventDisplayListener listener = new EventDisplayListener(delete, edit);
+		EventDisplayListener listener = new EventDisplayListener(delete, edit, text, event);
 		item.addMouseListener( listener );
 		// XXX these needs to be added also to children events to make the experience corrext
 		delete.addMouseListener( listener );
 		edit.addMouseListener( listener );
-		
-		this.content.add( item );
+
+        this.content.add( item );
 	}
-	
+
 	/**
 	 * Adds all the events in the iterator.
 	 * 
 	 * @param events list of events to be added.
 	 * */
-	public void addEvents(Iterator<fi.helsinki.cs.oato.model.Event> events) {
+	public void addEvents(Iterator<Event> events) {
 		this.content.removeAll();
 		while( events.hasNext() ) {
 			this.addEvent( events.next() );
@@ -107,11 +115,11 @@ public class EventList extends JScrollPane {
 	 **/
 	private class EventActionListener implements ActionListener {
 
-		private fi.helsinki.cs.oato.model.Event event;
+		private Event event;
 		private JComponent edit;
 		private JComponent delete;
 		
-		public EventActionListener(fi.helsinki.cs.oato.model.Event event, JComponent edit, JComponent delete) {
+		public EventActionListener(Event event, JComponent edit, JComponent delete) {
 			this.event = event;
 			this.edit = edit;
 			this.delete = delete;
@@ -137,10 +145,14 @@ public class EventList extends JScrollPane {
 
 		JButton delete;
 		JButton edit;
+        JLabel text;
+        Event event;
 		
-		public EventDisplayListener(JButton delete, JButton edit) {
+		public EventDisplayListener(JButton delete, JButton edit, JLabel text, Event event) {
 			this.delete = delete;
 			this.edit = edit;
+            this.text = text;
+            this.event = event;
 		}
 		
 		public void mouseClicked(MouseEvent e) {}
@@ -148,6 +160,7 @@ public class EventList extends JScrollPane {
 		public void mouseEntered(MouseEvent e) {
 			this.delete.setVisible(true);
 			this.edit.setVisible(true);
+            this.text.setText(event.toExtendedString());
 		}
 
 		public void mouseExited(MouseEvent e) {
@@ -155,6 +168,7 @@ public class EventList extends JScrollPane {
 			// XXX currently fixed with a hack
 			this.delete.setVisible(false);
 			this.edit.setVisible(false);
+            this.text.setText(event.toUIString());
 		}
 
 		public void mousePressed(MouseEvent e) {

@@ -1,11 +1,14 @@
 package fi.helsinki.cs.oato;
 import java.util.HashMap;
+import static org.joda.time.DateTimeConstants.*;
 
 /** This class is a (vulgar) way to localize our strings.
     This is not how it should be done. But it fits our (agile) purpose for now. */
 
 public class Strings {
     private static final HashMap<String,String> l = new HashMap<String,String>();
+    /* Weekdays inflected to "on X" where X is the weekday */
+    private static final HashMap<Integer,String> weekdaysOn = new HashMap<Integer,String>();
     
     static {
         l.put("remove() operation is not supported by EventIterator",
@@ -52,8 +55,34 @@ public class Strings {
               "Kaikki tapahtumat");
         l.put("Select course",
               "Valitse kurssi");
-        l.put("has no translation",
-              "ei käännetty");
+        l.put("Edit event",
+              "Muokkaa tapahtumaa");
+        l.put("today",
+              "tänään");
+        l.put("tomorrow",
+              "huomenna");
+        l.put("Error",
+              "Virhe");
+        l.put("Empty description",
+              "Tyhjä kuvaus");
+        l.put("Event end can not be before start",
+              "Tapahtuman ei voi loppua ennen alkua");
+        l.put("Invalid repeat interval",
+              "Epäkelpo toistoväli");
+        l.put("Repeat interval does not contain event start",
+              "Toistoväli ei sisällä tapahtuman alkua");
+        l.put(" has no translation",
+              " ei käännetty");
+        l.put("(unknown weekday)",
+              "(tuntematon viikonpäivä)");
+
+        weekdaysOn.put(MONDAY,     "maanantaina");
+        weekdaysOn.put(TUESDAY,    "tiistaina");
+        weekdaysOn.put(WEDNESDAY,  "keskiviikkona");
+        weekdaysOn.put(THURSDAY,   "torstaina");
+        weekdaysOn.put(FRIDAY,     "perjantaina");
+        weekdaysOn.put(SATURDAY,   "lauantaina");
+        weekdaysOn.put(SUNDAY,     "sunnuntaina");
     }
 
     /** Localize <code>original</code>. Edit Strings.java to add your translation.
@@ -62,10 +91,24 @@ public class Strings {
     public static String localize(String original) {
         if (!l.containsKey(original)) {
             if (Main.DEBUG) {
-                System.err.println(original + " has no translation");
+                System.err.println(original + localize(" has no translation"));
                 return original;
             }
         }
         return l.get(original);
     }
+
+    /** Localize <code>weekDay</code>.
+        @param constant Weekday to translate (from org.joda.time.DateTimeConstants).
+        @return Finnish translation. */
+    public static String weekdayOn(int original) {
+        if (!weekdaysOn.containsKey(original)) {
+            if (Main.DEBUG) {
+                System.err.println(original + localize(" has no translation"));
+                return localize("(unknown weekday)");
+            }
+        }
+        return weekdaysOn.get(original);
+    }
+    
 }

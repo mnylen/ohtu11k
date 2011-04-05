@@ -137,7 +137,7 @@ public class MainGUI extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
             
-            JOptionPane.showMessageDialog(this, "Could not load events");
+            JOptionPane.showMessageDialog(this, localize("Could not load events"));
             schedule = new Schedule();
         }
         updateSchedule( this.schedule );
@@ -165,7 +165,7 @@ public class MainGUI extends JFrame {
     	this.futureEvents.addEvents( s.nextEvents() );
     	this.allEvents.addEvents( s.allEvents() );
     }
-    
+
     /**
      * Returns the schedule of this view.
      * 

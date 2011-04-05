@@ -89,7 +89,7 @@ class EventIterator implements Iterator<Event> {
         // XXX hack
         // sometimes the latest event is not actually before the given date, 
         // but just happens to be the last element in the list => iterator can't go further
-        if( event.compareTo(now) < 0 ) {
+        if( event != null && event.compareTo(now) < 0 ) {
         	event = null;
         }
 

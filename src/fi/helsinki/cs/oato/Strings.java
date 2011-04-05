@@ -71,6 +71,8 @@ public class Strings {
               "Epäkelpo toistoväli");
         l.put("Repeat interval does not contain event start",
               "Toistoväli ei sisällä tapahtuman alkua");
+        l.put("Could not load events",
+              "Tapahtumia ei voitu ladata");
         l.put(" has no translation",
               " ei käännetty");
         l.put("(unknown weekday)",

@@ -14,7 +14,7 @@ public class Schedule {
      * Constructs an empty schedule.
      */
     public Schedule() {
-        this.events = new ArrayList<Event>();
+        this.events = new LinkedList<Event>();
     }
 
     /**
@@ -22,7 +22,7 @@ public class Schedule {
      * @param events the events
      */
     public Schedule(Collection<Event> events) {
-        this.events = new ArrayList<Event>(events);
+        this.events = new LinkedList<Event>(events);
     }
 
     /**

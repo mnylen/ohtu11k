@@ -20,6 +20,7 @@ public class EventList extends JScrollPane {
     public static final int HOVER_HGAP = 10;
     public static final int HOVER_VGAP = 0;
     public static final int ITEM_HEIGHT = 50;
+    public static final int SCROLLBAR_UNIT = ITEM_HEIGHT / 3;
     
 	/**
 	 * Serial version UID.
@@ -29,7 +30,7 @@ public class EventList extends JScrollPane {
 	/**
 	 * Actual container for the data.
 	 **/
-	private JPanel content = new JPanel();
+	private JPanel content;
 	
 	private MainGUI parent;
 	
@@ -38,13 +39,18 @@ public class EventList extends JScrollPane {
 	 **/
 	public EventList(MainGUI parent) {
 		this.parent = parent;
+        createContent();
+	}
+
+    private void createContent() {
+        this.content = new JPanel();
         this.content.setLayout( new BoxLayout(this.content, BoxLayout.Y_AXIS) );
         setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        getVerticalScrollBar().setUnitIncrement(ITEM_HEIGHT);
+        getVerticalScrollBar().setUnitIncrement(SCROLLBAR_UNIT);
         setViewportView(this.content);
         this.content.setVisible(true);
-	}
-	
+    }
+
 	/**
 	 * Sets the preferred size of this UI component.
 	 * 
@@ -94,8 +100,8 @@ public class EventList extends JScrollPane {
 		delete.addMouseListener( listener );
 		edit.addMouseListener( listener );
 
-        item.setPreferredSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
         item.setMaximumSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
+        item.setPreferredSize( new Dimension( (int) this.getPreferredSize().getWidth(), ITEM_HEIGHT ) );
         
         this.content.add( item );
 	}
@@ -106,7 +112,7 @@ public class EventList extends JScrollPane {
 	 * @param events list of events to be added.
 	 * */
 	public void addEvents(Iterator<Event> events) {
-		this.content.removeAll();
+		createContent();
 		while( events.hasNext() ) {
 			this.addEvent( events.next() );
 		}
